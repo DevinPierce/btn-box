@@ -1,0 +1,53 @@
+#interface-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+#tone-effect-bar{
+  display: flex;
+  flex-direction: column;
+  background-color: grey;
+  /* overflow: auto; */
+}
+
+.tone-effect-control{
+  width: 400px;
+  height: 180px;
+  border-style: solid;
+  border-color: black;
+}
+
+/* #mouse-control-toggle{
+  width: 400px;
+  height: 180px;
+  border-style: solid;
+  border-color: black;
+} */
+
+#mouse-control-container{
+  display: flex;
+  flex-direction: column;
+  border-style: solid;
+  border-color: black;
+}
+
+#chromatic-control-field{
+  height: 500px;
+  width: 700px;
+}
+
+#keyboard-view-container{
+  background-color: grey;
+}
+
+#keyboard-view{
+  display: grid;
+}
+/* need seperate grids for each keyboard row?  */
+.key{
+
+}
+.lit{
+  background-color: black;
+}
