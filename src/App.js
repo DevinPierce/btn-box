@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import './App.css';
 
-import Audio from './containers/Audio'
+import AudioController from './containers/AudioController'
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <Audio />
+        <AudioController />
       </div>
     );
   }
