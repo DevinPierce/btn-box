@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 
+import { connect } from 'react-redux';
+
 import Audio from '../audio/Audio'
 
 import InterfaceContainer from './InterfaceContainer'
 
-export default class AudioController extends Component {
+class AudioController extends Component {
 
   constructor(){
     super()
@@ -18,11 +20,46 @@ export default class AudioController extends Component {
 
       Space: false
     }
-    this.audio = Audio()
   }
 
-  mouseControlProps = () => {
-    // TODO: notes should fade in in ascending order. May need to work out the exact dimensions of the chromatic input field and all the related math before it makes sense to figure this out
+  circleControlProps = () => {
+    const setNotes = (rootNote) => {
+      const intervals = this.audio.harmonize(rootNote, [-12, 3, 4, 6, 7, 8, 10, 11])
+      console.log(rootNote, intervals);
+      this.audio.bassNote.frequency.value = intervals[0]
+      this.audio.rootNote.frequency.value = rootNote
+      this.audio.minorThird.frequency.value = intervals[1]
+      this.audio.majorThird.frequency.value = intervals[2]
+      this.audio.diminishedFifth.frequency.value = intervals[3]
+      this.audio.perfectFifth.frequency.value = intervals[4]
+      this.audio.augmentedFifth.frequency.value = intervals[5]
+      this.audio.minorSeventh.frequency.value = intervals[6]
+      this.audio.majorSeventh.frequency.value = intervals[7]
+    }
+
+    const toneStart = () => {
+      // BUG: sounds like I'm still getting double attack sometimes? Seems to happen when moving to new note slice before previous release has ended. It might also just be the popping/clipping issues, I'm not sure
+      // NOTE: seems like the tail of the previous un-released note is changing pitch first, before the new attack triggers, causing the double attack effect
+      this.audio.mouseOn = true
+
+      this.audio.activeNotes.forEach(note => note.triggerAttack(note.frequency.value))
+    }
+
+    const toneStop = () => {
+      this.audio.mouseOn = false
+
+      this.audio.activeNotes.forEach(note => note.triggerRelease())
+    }
+
+    return {
+      setNotes,
+      toneStart,
+      toneStop,
+    }
+  }
+
+  chromaticControlProps = () => {
+    // TODO: notes should fade in in ascending order. May need to work out the exact dimensions of the chromatic input field and all the related math before it makes sense to figure this out. also, make sure volume settings are normalized when switching to circle mode
     const changeXValue = (value) => {
       this.audio.thirdVolume.volume.value = value
       this.audio.fifthVolume.volume.value = value
@@ -31,40 +68,45 @@ export default class AudioController extends Component {
     }
     const changeYValue = (value) => {
       console.log('Y', value)
-      this.audio.bassNote.frequency.value = value / 2
+      const intervals = this.audio.harmonize(value, [-12, 3, 4, 6, 7, 8, 10, 11])
+      this.audio.bassNote.frequency.value = intervals[0]
       this.audio.rootNote.frequency.value = value
-      this.audio.minorThird.frequency.value = value * 1.20
-      this.audio.majorThird.frequency.value = value * 1.25
-      this.audio.diminishedFifth.frequency.value = value * 1.4
-      this.audio.perfectFifth.frequency.value = value * 1.5
-      this.audio.augmentedFifth.frequency.value = value * 1.6
-      this.audio.minorSeventh.frequency.value = value * 1.78
-      this.audio.majorSeventh.frequency.value = value * 1.9
+      this.audio.minorThird.frequency.value = intervals[1]
+      this.audio.majorThird.frequency.value = intervals[2]
+      this.audio.diminishedFifth.frequency.value = intervals[3]
+      this.audio.perfectFifth.frequency.value = intervals[4]
+      this.audio.augmentedFifth.frequency.value = intervals[5]
+      this.audio.minorSeventh.frequency.value = intervals[6]
+      this.audio.majorSeventh.frequency.value = intervals[7]
     }
     const toneStart = () => {
       this.audio.mouseOn = true
       // this.audio.rootNote.triggerAttack(this.audio.rootNote.frequency.value)
-      // TODO: use activeChords instead here
-      for (let key in this.state){
-        if (this.state[key]){
-          this.audio.chordMap[key].forEach(note => note.triggerAttack(note.frequency.value))
-        }
-      }
+
+      this.audio.activeNotes.forEach(note => note.triggerAttack(note.frequency.value))
+
+      // for (let key in this.state){
+      //   if (this.state[key]){
+      //     this.audio.chordMap[key].forEach(note => note.triggerAttack(note.frequency.value))
+      //   }
+      // }
     }
     const toneStop = () => {
       this.audio.mouseOn = false
       // this.audio.rootNote.triggerRelease()
-      // TODO: use activeChords instead here. this might solve the mouse-off holdover problem, inshallah
-      for (let key in this.audio.chordMap){
-        this.audio.chordMap[key].forEach(note => note.triggerRelease())
-      }
+
+      this.audio.activeNotes.forEach(note => note.triggerRelease())
+
+      // for (let key in this.audio.chordMap){
+      //   this.audio.chordMap[key].forEach(note => note.triggerRelease())
+      // }
     }
 
     return {
       changeXValue,
       changeYValue,
       toneStart,
-      toneStop
+      toneStop,
     }
   }
 
@@ -73,13 +115,13 @@ export default class AudioController extends Component {
     this.toggleKeydown(key)
 
     this.audio.activeChords.push(this.audio.chordMap[key])
-    console.log(this.audio.activeChords);
     this.audio.chordMap[key].forEach(note => {
       // NOTE: if activeNotes does NOT contain note, push it
       if (!this.audio.activeNotes.some(activeNote => activeNote === note)){
         this.audio.activeNotes.push(note)
       }
     })
+    console.log(this.audio.activeChords, this.audio.activeNotes);
 
     if (this.audio.mouseOn){
       this.audio.activeNotes.forEach(note => note.triggerAttack(note.frequency.value))
@@ -90,7 +132,6 @@ export default class AudioController extends Component {
     this.toggleKeydown(key)
 
     this.audio.activeChords = this.audio.activeChords.filter(chord => chord !== this.audio.chordMap[key])
-    console.log(this.audio.activeChords);
 
     this.audio.activeNotes.forEach(note => {
       // NOTE: if note is NOT contained in activeChords, triggerRelease, and remove from activeNotes
@@ -108,6 +149,7 @@ export default class AudioController extends Component {
     })
     this.audio.activeNotes = updatedActiveNotes
 
+    console.log(this.audio.activeChords, this.audio.activeNotes);
     // this.audio.chordMap[key].forEach(note => note.triggerRelease())
   }
 
@@ -121,13 +163,18 @@ export default class AudioController extends Component {
   render(){
     return (
       <InterfaceContainer
-        mouseControlProps={this.mouseControlProps()}
+        circleControlProps={this.circleControlProps()}
+        chromaticControlProps={this.chromaticControlProps()}
         keyDowns={this.state}
       />
     )
   }
 
   componentDidMount(){
+    // console.log(this.props);
+    // TODO: audio needs to instantiate with mouse control mode. Need another AudioController method to re-initialize Audio when mouse control mode changes
+    // NOTE: or maybe not? I don't think Audio module actually changes how it functions, only the signals that it recieves from the controls change
+    this.audio = Audio()
 
     const checkIfControlKey = (key) => {
       return (key === 'KeyQ' ||
@@ -162,3 +209,11 @@ export default class AudioController extends Component {
   }
 
 }
+
+function mapStateToProps(state) {
+  return {
+    interfaceMode: state.interfaceMode
+  }
+}
+
+export default connect(mapStateToProps)(AudioController)

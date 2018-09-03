@@ -1,7 +1,25 @@
 import React from 'react';
 
-export default function CircleNoteSlice () {
+export default function CircleNoteSlice (props) {
 
-  return null
+  const handleMouseEnter = () => {
+    props.circleControlProps.setNotes(props.note)
+    props.circleControlProps.toneStart()
+  }
+  const handleMouseLeave = () => {
+    props.circleControlProps.toneStop()
+  }
+
+  return (
+    <div
+      className={`note-slice position${props.position}`}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      >
+      <div className="note-symbol">
+        {props.note}
+      </div>
+    </div>
+  )
 
 }

@@ -1,58 +1,43 @@
 import Tone from 'tone'
 
-const monoSynthDefaults = {
-  frequency: 'C4',
-  detune: 0,
+const synthDefaults = {
   oscillator: {
-    type: 'triangle'
-  },
-  filter: {
-    Q: 1,
-    type: 'lowpass',
-    rolloff: -24
+    type: 'triangle',
   },
   envelope: {
-    attack: 0.00,
-    decay: 0.0,
-    sustain: 0.9,
-    release: 0.5
+    attack: 0.005,
+    decay: 0.1,
+    sustain: 0.3,
+    release: 1
   },
-  filterEnvelope: {
-    attack: 0.0,
-    decay: 0.0,
-    sustain: 0.5,
-    release: 2,
-    baseFrequency: 200,
-    octaves: 7,
-    exponent: 2
-  }
 }
 
-function Audio (settings = monoSynthDefaults) {
+function Audio (settings = synthDefaults) {
 
   const limiter = new Tone.Limiter().toMaster()
 
   const reverb = new Tone.JCReverb({roomSize: 0.1}).connect(limiter)
+  const filter = new Tone.Filter({frequency: 20000}).connect(reverb)
 
-  const mixer = new Tone.Volume({volume: -6}).connect(reverb)
+  const mixer = new Tone.Volume({volume: -6}).connect(filter)
 
   const mouseOn = false
 
-  const bassNote = new Tone.MonoSynth(settings).connect(mixer)
+  const bassNote = new Tone.Synth(settings).connect(mixer)
 
-  const rootNote = new Tone.MonoSynth(settings).connect(mixer)
+  const rootNote = new Tone.Synth(settings).connect(mixer)
 
   const thirdVolume = new Tone.Volume().connect(mixer)
   const fifthVolume = new Tone.Volume().connect(mixer)
   const seventhVolume = new Tone.Volume().connect(mixer)
 
-  const minorThird = new Tone.MonoSynth(settings).connect(thirdVolume)
-  const majorThird = new Tone.MonoSynth(settings).connect(thirdVolume)
-  const diminishedFifth = new Tone.MonoSynth(settings).connect(fifthVolume)
-  const perfectFifth = new Tone.MonoSynth(settings).connect(fifthVolume)
-  const augmentedFifth = new Tone.MonoSynth(settings).connect(fifthVolume)
-  const minorSeventh = new Tone.MonoSynth(settings).connect(seventhVolume)
-  const majorSeventh = new Tone.MonoSynth(settings).connect(seventhVolume)
+  const minorThird = new Tone.Synth(settings).connect(thirdVolume)
+  const majorThird = new Tone.Synth(settings).connect(thirdVolume)
+  const diminishedFifth = new Tone.Synth(settings).connect(fifthVolume)
+  const perfectFifth = new Tone.Synth(settings).connect(fifthVolume)
+  const augmentedFifth = new Tone.Synth(settings).connect(fifthVolume)
+  const minorSeventh = new Tone.Synth(settings).connect(seventhVolume)
+  const majorSeventh = new Tone.Synth(settings).connect(seventhVolume)
 
   const keyDowns = {
     KeyQ: false,
@@ -63,6 +48,14 @@ function Audio (settings = monoSynthDefaults) {
     KeyF: false,
 
     Space: false
+  }
+
+  // const transpose = (frequency, interval) => {
+  //   return Tone.Frequency(frequency).transpose(interval)
+  // }
+
+  const harmonize = (frequency, intervals) => {
+    return Tone.Frequency(frequency).harmonize(intervals)
   }
 
   return {
@@ -90,6 +83,10 @@ function Audio (settings = monoSynthDefaults) {
 
     keyDowns,
 
+    chordDefinitions: {
+
+    },
+
     chordMap: {
       KeyQ: [rootNote, majorThird, augmentedFifth],
       KeyA: [rootNote, majorThird, perfectFifth],
@@ -102,7 +99,10 @@ function Audio (settings = monoSynthDefaults) {
     },
 
     activeChords: [],
-    activeNotes: []
+    activeNotes: [],
+
+    // transpose,
+    harmonize,
   }
 
 }

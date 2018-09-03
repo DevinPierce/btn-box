@@ -7,7 +7,7 @@ export default class CircleControlContainer extends Component {
   render(){
     return (
       <CircleControl
-        mouseControlProps={this.props.mouseControlProps}
+        circleControlProps={this.props.circleControlProps}
       />
     )
   }

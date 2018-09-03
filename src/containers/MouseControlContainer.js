@@ -1,19 +1,21 @@
 import React, { Component } from 'react';
 
+import { connect } from 'react-redux';
+
 import ChromaticControlContainer from './mousecontrol/ChromaticControlContainer'
 import CircleControlContainer from './mousecontrol/CircleControlContainer'
 
-export default class MouseControlContainer extends Component {
+class MouseControlContainer extends Component {
 
   renderControlContainer = () => {
-    // TODO: will render either container by depending on view toggle
-    if (true){
+
+    if (this.props.interfaceMode.chromaticControl){
       return <ChromaticControlContainer
-         mouseControlProps={this.props.mouseControlProps}
+        chromaticControlProps={this.props.chromaticControlProps}
        />
-    } else if (false) {
+    } else if (this.props.interfaceMode.circleControl) {
       return <CircleControlContainer
-         mouseControlProps={this.props.mouseControlProps}
+        circleControlProps={this.props.circleControlProps}
        />
     }
   }
@@ -27,3 +29,11 @@ export default class MouseControlContainer extends Component {
   }
 
 }
+
+function mapStateToProps(state) {
+  return {
+    interfaceMode: state.interfaceMode
+  }
+}
+
+export default connect(mapStateToProps)(MouseControlContainer)

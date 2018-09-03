@@ -30,11 +30,116 @@
   flex-direction: column;
   border-style: solid;
   border-color: black;
+  height: 500px;
+  width: 700px;
 }
 
 #chromatic-control-field{
   height: 500px;
   width: 700px;
+}
+#circle-control-field{
+  height: 400px;
+  width: 400px;
+  /* margin-top: 50px; */
+  margin-bottom: 50px;
+  margin-left: 150px;
+  margin-right: 150px;
+  position: relative;
+}
+
+.note-slice{
+  height: 90px;
+  width: 90px;
+  border-radius: 50%;
+  border-style: solid;
+  border-color: black;
+  position: absolute;
+  top: 50%; left: 50%;
+  transition: background-color .25s, transform .5s;
+}
+.note-slice:hover{
+  /* transform here will be overridden by following transforms, (or overwrite them, if this one follows after them.  hover element may need to be another element within note-slice) */
+  /* transform: scale(1.1, 1.1); */
+  background-color: black
+}
+
+.note-slice.position0{
+  transform: translateY(-200px);
+}
+.note-slice.position1{
+  transform: rotate(30deg) translateY(-200px) rotate(-30deg);
+}
+.note-slice.position2{
+  transform: rotate(60deg) translateY(-200px) rotate(-60deg);
+}
+.note-slice.position3{
+  transform: rotate(90deg) translateY(-200px) rotate(-90deg);
+}
+.note-slice.position4{
+  transform: rotate(120deg) translateY(-200px) rotate(-120deg);
+}
+.note-slice.position5{
+  transform: rotate(150deg) translateY(-200px) rotate(-150deg);
+}
+.note-slice.position6{
+  transform: rotate(180deg) translateY(-200px) rotate(-180deg);
+}
+.note-slice.position7{
+  transform: rotate(210deg) translateY(-200px) rotate(-210deg);
+}
+.note-slice.position8{
+  transform: rotate(240deg) translateY(-200px) rotate(-240deg);
+}
+.note-slice.position9{
+  transform: rotate(270deg) translateY(-200px) rotate(-270deg);
+}
+.note-slice.position10{
+  transform: rotate(300deg) translateY(-200px) rotate(-300deg);
+}
+.note-slice.position11{
+  transform: rotate(330deg) translateY(-200px) rotate(-330deg);
+}
+.note-slice.position0:hover{
+  transform: translateY(-200px) scale(1.1);
+}
+.note-slice.position1:hover{
+  transform: rotate(30deg) translateY(-200px) rotate(-30deg) scale(1.1);
+}
+.note-slice.position2:hover{
+  transform: rotate(60deg) translateY(-200px) rotate(-60deg) scale(1.1);
+}
+.note-slice.position3:hover{
+  transform: rotate(90deg) translateY(-200px) rotate(-90deg) scale(1.1);
+}
+.note-slice.position4:hover{
+  transform: rotate(120deg) translateY(-200px) rotate(-120deg) scale(1.1);
+}
+.note-slice.position5:hover{
+  transform: rotate(150deg) translateY(-200px) rotate(-150deg) scale(1.1);
+}
+.note-slice.position6:hover{
+  transform: rotate(180deg) translateY(-200px) rotate(-180deg) scale(1.1);
+}
+.note-slice.position7:hover{
+  transform: rotate(210deg) translateY(-200px) rotate(-210deg) scale(1.1);
+}
+.note-slice.position8:hover{
+  transform: rotate(240deg) translateY(-200px) rotate(-240deg) scale(1.1);
+}
+.note-slice.position9:hover{
+  transform: rotate(270deg) translateY(-200px) rotate(-270deg) scale(1.1);
+}
+.note-slice.position10:hover{
+  transform: rotate(300deg) translateY(-200px) rotate(-300deg) scale(1.1);
+}
+.note-slice.position11:hover{
+  transform: rotate(330deg) translateY(-200px) rotate(-330deg) scale(1.1);
+}
+
+.note-symbol{
+  position: absolute;
+  top: 50%; left: 50%;
 }
 
 #keyboard-view-container{

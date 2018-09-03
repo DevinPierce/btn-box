@@ -7,7 +7,7 @@ export default class ChromaticControlContainer extends Component {
   render(){
     return (
       <ChromaticControl
-        mouseControlProps={this.props.mouseControlProps}
+        chromaticControlProps={this.props.chromaticControlProps}
       />
     )
   }

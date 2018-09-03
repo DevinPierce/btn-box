@@ -22,15 +22,10 @@ export default class InterfaceContainer extends Component {
       <div id="interface-container">
         <ToneEffectsBarContainer />
         <MouseKeyboardContainer
-          mouseControlProps={this.props.mouseControlProps}
+          circleControlProps={this.props.circleControlProps}
+          chromaticControlProps={this.props.chromaticControlProps}
           keyDowns={this.props.keyDowns}
         />
-        {/* <MouseControlContainer
-          mouseControlProps={this.props.mouseControlProps}
-        /> */}
-        {/* <KeyboardViewContainer
-          keyDowns={this.props.keyDowns}
-         /> */}
       </div>
     )
   }
