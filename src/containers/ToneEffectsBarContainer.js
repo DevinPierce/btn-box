@@ -1,19 +1,26 @@
 import React, { Component } from 'react';
-
-import MouseControlToggle from '../components/toneeffects/MouseControlToggle'
+import MouseModeToggleMasterVolume from '../components/toneeffects/MouseModeToggleMasterVolume'
 import Tone from '../components/toneeffects/Tone'
-import Envelopes from '../components/toneeffects/Envelopes'
 import Effects from '../components/toneeffects/Effects'
 
 export default class ToneEffectsBarContainer extends Component {
 
   render(){
+
     return (
       <div id="tone-effects-bar">
-        <MouseControlToggle />
-        <Tone />
-        <Envelopes />
-        <Effects />
+        <MouseModeToggleMasterVolume
+          changeMasterVolume={this.props.toneEffectsProps.changeMasterVolume}
+         />
+        <Tone
+          toneControls={this.props.toneEffectsProps.toneControls}
+        />
+        <Effects
+          reverbControls={this.props.toneEffectsProps.reverbControls}
+          delayControls={this.props.toneEffectsProps.delayControls}
+          vibratoControls={this.props.toneEffectsProps.vibratoControls}
+          tremoloControls={this.props.toneEffectsProps.tremoloControls}
+        />
       </div>
     )
   }

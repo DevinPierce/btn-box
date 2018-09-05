@@ -1,43 +1,36 @@
 import Tone from 'tone'
 
-const synthDefaults = {
-  oscillator: {
-    type: 'triangle',
-  },
-  envelope: {
-    attack: 0.005,
-    decay: 0.1,
-    sustain: 0.3,
-    release: 1
-  },
-}
-
-function Audio (settings = synthDefaults) {
+function Audio (settings) {
 
   const limiter = new Tone.Limiter().toMaster()
 
-  const reverb = new Tone.JCReverb({roomSize: 0.1}).connect(limiter)
-  const filter = new Tone.Filter({frequency: 20000}).connect(reverb)
+  const master = new Tone.Volume(settings.master).connect(limiter)
 
-  const mixer = new Tone.Volume({volume: -6}).connect(filter)
+  const reverb = new Tone.Freeverb(settings.reverb).connect(master)
+  const delay = new Tone.FeedbackDelay(settings.delay).connect(reverb)
+  const filter = new Tone.Filter(settings.filter).connect(delay)
+  const vibrato = new Tone.Vibrato(settings.vibrato).connect(filter)
+  const tremolo = new Tone.Tremolo(settings.tremolo).connect(vibrato).start()
+
+  const mixer = new Tone.Volume({volume: -6}).connect(tremolo)
 
   const mouseOn = false
 
-  const bassNote = new Tone.Synth(settings).connect(mixer)
+  const bassNote = new Tone.Synth(settings.synths).connect(mixer)
 
-  const rootNote = new Tone.Synth(settings).connect(mixer)
+  const rootNote = new Tone.Synth(settings.synths).connect(mixer)
 
   const thirdVolume = new Tone.Volume().connect(mixer)
   const fifthVolume = new Tone.Volume().connect(mixer)
   const seventhVolume = new Tone.Volume().connect(mixer)
 
-  const minorThird = new Tone.Synth(settings).connect(thirdVolume)
-  const majorThird = new Tone.Synth(settings).connect(thirdVolume)
-  const diminishedFifth = new Tone.Synth(settings).connect(fifthVolume)
-  const perfectFifth = new Tone.Synth(settings).connect(fifthVolume)
-  const augmentedFifth = new Tone.Synth(settings).connect(fifthVolume)
-  const minorSeventh = new Tone.Synth(settings).connect(seventhVolume)
-  const majorSeventh = new Tone.Synth(settings).connect(seventhVolume)
+  const minorThird = new Tone.Synth(settings.synths).connect(thirdVolume)
+  const majorThird = new Tone.Synth(settings.synths).connect(thirdVolume)
+  const diminishedFifth = new Tone.Synth(settings.synths).connect(fifthVolume)
+  const perfectFifth = new Tone.Synth(settings.synths).connect(fifthVolume)
+  const augmentedFifth = new Tone.Synth(settings.synths).connect(fifthVolume)
+  const minorSeventh = new Tone.Synth(settings.synths).connect(seventhVolume)
+  const majorSeventh = new Tone.Synth(settings.synths).connect(seventhVolume)
 
   const keyDowns = {
     KeyQ: false,
@@ -58,10 +51,19 @@ function Audio (settings = synthDefaults) {
     return Tone.Frequency(frequency).harmonize(intervals)
   }
 
-  return {
-    reverb,
+  // function updateSettings (audioSettings) {
+  //
+  //   // IDEA: this shit sucks, maybe give up on using redux to update settings, just use passed control functions, set Audio values in AudioController, and then update Redux for controlled inputs
+  // }
 
-    mixer,
+  return {
+    master,
+
+    reverb,
+    delay,
+    filter,
+    vibrato,
+    tremolo,
 
     mouseOn,
 
@@ -83,10 +85,6 @@ function Audio (settings = synthDefaults) {
 
     keyDowns,
 
-    chordDefinitions: {
-
-    },
-
     chordMap: {
       KeyQ: [rootNote, majorThird, augmentedFifth],
       KeyA: [rootNote, majorThird, perfectFifth],
@@ -103,6 +101,7 @@ function Audio (settings = synthDefaults) {
 
     // transpose,
     harmonize,
+    // updateSettings,
   }
 
 }

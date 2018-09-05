@@ -7,15 +7,120 @@
 #tone-effect-bar{
   display: flex;
   flex-direction: column;
-  background-color: grey;
-  /* overflow: auto; */
+  /* overflow: scroll; */
 }
 
 .tone-effect-control{
   width: 400px;
-  height: 180px;
+  height: 250px;
   border-style: solid;
   border-color: black;
+}
+
+#mouse-mode-toggle-master-volume{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.toggle-volume-element>button{
+  height: 100%;
+}
+.toggle-volume-element>input{
+  transform: rotate(-90deg);
+  height: 100%;
+}
+
+#tone-controls{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.tone-control{
+  padding: 2%;
+  height: 46%;
+  width: 96%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+#filter-controls{
+  padding: 2%;
+  height: 46%;
+  width: 96%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#filter-inputs{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.filter-inputs{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+#filter-select{
+  width: 33%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#filter-sliders{
+  width: 66%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+#filter-sliders>input{
+  margin: auto;
+  width: 225px;
+}
+
+.tone-label{
+  text-align: center;
+}
+
+#effects-controls{
+  width: 400px;
+  height: 250px;
+  border-style: solid;
+  border-color: black;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.effect-control{
+  padding: 2%;
+  height: 46%;
+  width: 46%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.effect-label{
+  text-align: center;
+}
+
+.slider-label{
+  text-align: center;
+  display: block;
+}
+
+.slider{
+  width: 180px;
 }
 
 /* #mouse-control-toggle{

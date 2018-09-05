@@ -1,10 +1,17 @@
 import React from 'react';
 
-export default function Tone () {
+import Waveform from './tone/Waveform'
+import Filter from './tone/Filter'
+
+export default function Tone (props) {
 
   return (
     <div id="tone-controls" className="tone-effect-control">
-
+      <Waveform changeWaveform={props.toneControls.changeWaveform} />
+      <Filter
+        filterFrequency={props.toneControls.filterFrequency}
+        filterResonance={props.toneControls.filterResonance}
+      />
     </div>
   )
 

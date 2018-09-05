@@ -2,9 +2,13 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 
+import {changeMasterVolumeAction, changeEffectValueAction} from '../redux/actions/audioSettingsActions'
+
 import Audio from '../audio/Audio'
 
 import InterfaceContainer from './InterfaceContainer'
+
+// const isEqual = require("react-fast-compare");
 
 class AudioController extends Component {
 
@@ -39,7 +43,9 @@ class AudioController extends Component {
 
     const toneStart = () => {
       // BUG: sounds like I'm still getting double attack sometimes? Seems to happen when moving to new note slice before previous release has ended. It might also just be the popping/clipping issues, I'm not sure
-      // NOTE: seems like the tail of the previous un-released note is changing pitch first, before the new attack triggers, causing the double attack effect
+      // NOTE: seems like the tail of the previous un-released note is changing pitch first, before the new attack triggers, causing the double attack effect. Not sure how to fix this other than to just give all note slices their own set of synths
+      // NOTE: This problem will kind of solve itself if I can figure out how to make the note slices border each other seamlessly, since there will be no mouse-offs when moving between slices, but there still will be when moving quicly through the middle of the circle
+      // NOTE: also, getting rid of sharp attacks in the amplitude envelopes makes the problem practically non-existant, so maybe that's a last resort solution
       this.audio.mouseOn = true
 
       this.audio.activeNotes.forEach(note => note.triggerAttack(note.frequency.value))
@@ -106,8 +112,15 @@ class AudioController extends Component {
       changeXValue,
       changeYValue,
       toneStart,
-      toneStop,
+    toneStop,
     }
+  }
+
+  toggleKeydown = (key) => {
+    this.audio.keyDowns[key] = !this.audio.keyDowns[key]
+    this.setState({
+      [key]: !this.state[key]
+    })
   }
 
   keyDown = (key) => {
@@ -153,16 +166,138 @@ class AudioController extends Component {
     // this.audio.chordMap[key].forEach(note => note.triggerRelease())
   }
 
-  toggleKeydown = (key) => {
-    this.audio.keyDowns[key] = !this.audio.keyDowns[key]
-    this.setState({
-      [key]: !this.state[key]
-    })
+  toneEffectsProps = () => {
+
+    // TODO: these should also update Redux Audio settings state, but I can worry about that later
+
+    const changeMasterVolume = (value) => {
+      this.audio.master.volume.value = value
+      this.props.changeMasterVolumeAction(value)
+    }
+
+    const toneControls = () => {
+      return {
+        changeWaveform:(setting) => {
+          this.audio.bassNote.oscillator.type = setting
+          this.audio.rootNote.oscillator.type = setting
+          this.audio.minorThird.oscillator.type = setting
+          this.audio.majorThird.oscillator.type = setting
+          this.audio.diminishedFifth.oscillator.type = setting
+          this.audio.perfectFifth.oscillator.type = setting
+          this.audio.augmentedFifth.oscillator.type = setting
+          this.audio.minorSeventh.oscillator.type = setting
+          this.audio.majorSeventh.oscillator.type = setting
+        },
+        filterFrequency:(value) => {
+          console.log('changing frequency');
+          this.audio.filter.frequency.value = value
+          this.props.changeEffectValueAction('filter', 'frequency', value)
+          console.log(this.audio.filter.frequency.value)
+        },
+        filterResonance:(value) => {
+          console.log('changing resonance');
+          this.audio.filter.Q.value = value
+          this.props.changeEffectValueAction('filter', 'Q', value)
+          console.log(this.audio.filter.Q.value)
+      }
+    }
+  }
+
+    const reverbControls = () => {
+      return {
+        roomSize:(value) => {
+          console.log('changing roomsize');
+          this.audio.reverb.roomSize.value = value
+          this.props.changeEffectValueAction('reverb', 'roomSize', value)
+          console.log(this.audio.reverb.roomSize.value)
+        },
+        dampening:(value) => {
+          console.log('changing dampening');
+          this.audio.reverb.dampening.value = value
+          this.props.changeEffectValueAction('reverb', 'dampening', value)
+          console.log(this.audio.reverb.dampening.value);
+        },
+        wet:(value) => {
+          console.log('changing wet');
+          this.audio.reverb.wet.value = value
+          this.props.changeEffectValueAction('reverb', 'wet', value)
+          console.log(this.audio.reverb.wet.value);
+        }
+      }
+    }
+
+    const delayControls = () => {
+      return {
+        delayTime:(value) => {
+          console.log('changing delaytime');
+          this.audio.delay.delayTime.value = value
+          this.props.changeEffectValueAction('delay', 'delayTime', value)
+          console.log(this.audio.delay.delayTime.value);
+        },
+        feedback:(value) => {
+          console.log('changing feedback');
+          this.audio.delay.feedback.value = value
+          this.props.changeEffectValueAction('delay', 'feedback', value)
+          console.log(this.audio.delay.feedback.value);
+        },
+        wet:(value) => {
+          console.log('changing wet');
+          this.audio.delay.wet.value = value
+          this.props.changeEffectValueAction('delay', 'wet', value)
+          console.log(this.audio.delay.wet.value);
+        },
+      }
+    }
+
+    const vibratoControls = () => {
+      return {
+        frequency:(value) => {
+          console.log('changing frequency');
+          this.audio.vibrato.frequency.value = value
+          this.props.changeEffectValueAction('vibrato', 'frequency', value)
+          console.log(this.audio.vibrato.frequency.value);
+        },
+        depth:(value) => {
+          console.log('changing depth');
+          this.audio.vibrato.depth.value = value
+          this.props.changeEffectValueAction('vibrato', 'depth', value)
+          console.log(this.audio.vibrato.depth.value);
+        },
+      }
+    }
+
+    const tremoloControls = () => {
+      return {
+        frequency:(value) => {
+          console.log('changing frequency');
+          this.audio.tremolo.frequency.value = value
+          this.props.changeEffectValueAction('tremolo', 'frequency', value)
+          console.log(this.audio.tremolo.frequency.value);
+        },
+        depth:(value) => {
+          console.log('changing depth');
+          this.audio.tremolo.depth.value = value
+          this.props.changeEffectValueAction('tremolo', 'depth', value)
+          console.log(this.audio.tremolo.depth.value);
+        },
+      }
+    }
+
+    return {
+      changeMasterVolume,
+      toneControls: toneControls(),
+      reverbControls: reverbControls(),
+      delayControls: delayControls(),
+      vibratoControls: vibratoControls(),
+      tremoloControls: tremoloControls(),
+    }
+
   }
 
   render(){
     return (
       <InterfaceContainer
+        toneEffectsProps={this.toneEffectsProps()}
         circleControlProps={this.circleControlProps()}
         chromaticControlProps={this.chromaticControlProps()}
         keyDowns={this.state}
@@ -170,11 +305,15 @@ class AudioController extends Component {
     )
   }
 
+  // componentDidUpdate(prevProps){
+  // NOTE: redux state changes are present in props, but do not actually affect rendering, so I may be able to prevent a lot of unnecessary renders by preventing them on AudioController prop changes
+  // }
+
   componentDidMount(){
-    // console.log(this.props);
-    // TODO: audio needs to instantiate with mouse control mode. Need another AudioController method to re-initialize Audio when mouse control mode changes
-    // NOTE: or maybe not? I don't think Audio module actually changes how it functions, only the signals that it recieves from the controls change
-    this.audio = Audio()
+    this.audio = Audio(this.props.audioSettings)
+    // NOTE: Tone/effects settings should be saved in Redux store and passed in on mount, but since they do not effect rendering at this level, they will also have to manually modify the Audio module when being changed.
+    // IDEA: Maybe a lifecycle method like componentDidUpdate or something would help? Something that will fire when the props change, which could then re-initialize the Audio module
+    // NOTE: I don't need to re-initialize Audio on every change though, and it looks like Tone can change most settings (even oscillator types) without re-initializing, so maybe I should just make all changes through prop which also change Redux store (for saving later with Redux-Persist, or just protecting against weird re-render/re-initialize stuff that might come up)
 
     const checkIfControlKey = (key) => {
       return (key === 'KeyQ' ||
@@ -212,8 +351,14 @@ class AudioController extends Component {
 
 function mapStateToProps(state) {
   return {
-    interfaceMode: state.interfaceMode
+    audioSettings: state.audioSettings
+  }
+}
+function mapDispatchToProps(dispatch) {
+  return {
+    changeMasterVolumeAction: (value) => dispatch(changeMasterVolumeAction(value)),
+    changeEffectValueAction: (effect, setting, value) => dispatch(changeEffectValueAction(effect, setting, value))
   }
 }
 
-export default connect(mapStateToProps)(AudioController)
+export default connect(mapStateToProps, mapDispatchToProps)(AudioController)
