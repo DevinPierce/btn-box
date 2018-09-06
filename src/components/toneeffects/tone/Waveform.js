@@ -1,13 +1,37 @@
 import React from 'react';
 
+import WaveformButton from './WaveformButton'
+
 export default function Waveform (props) {
+
+  const waveforms = [
+    'Sine',
+    'Triangle',
+    'Square',
+    'Sawtooth',
+    'Sine4',
+    'Triangle4',
+    'Square4',
+    'Sawtooth4',
+    'Sine8',
+    'Triangle8',
+    'Square8',
+    'Sawtooth8',
+  ]
+
+  const renderButtons = () => {
+    return waveforms.map(waveform => {
+      return <WaveformButton
+        key={waveform}
+        type={waveform}
+        changeWaveform={props.changeWaveform}
+      />
+    })
+  }
 
   return (
     <div id="waveform-controls" className="tone-control">
-      <button onClick={()=>props.changeWaveform('sine')}>ANOTHER TEMPORARY BUTTON HERE! SINE</button>
-      <button onClick={()=>props.changeWaveform('square4')}>ANOTHER TEMPORARY BUTTON HERE! SQUARE</button>
-      <button onClick={()=>props.changeWaveform('triangle')}>ANOTHER TEMPORARY BUTTON HERE! TRIANGLE</button>
-      <button onClick={()=>props.changeWaveform('sawtooth4')}>ANOTHER TEMPORARY BUTTON HERE! SAWTOOTH</button>
+      {renderButtons()}
     </div>
   )
 

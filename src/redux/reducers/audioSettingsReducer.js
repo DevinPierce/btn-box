@@ -12,18 +12,18 @@ const initialState = {
   },
 
   master: {
-    volume: -12
+    volume: -6
   },
 
   reverb: {
-    roomSize: 0.2,
-    dampening: 5000,
-    wet: 0.25
+    roomSize: 0.1,
+    dampening: 20000,
+    wet: 0.12
   },
   delay: {
     delayTime: 0.25,
     feedback: 0.5,
-    wet: 0.25
+    wet: 0.12
   },
   filter: {
     type: 'lowpass',
@@ -33,7 +33,7 @@ const initialState = {
   vibrato: {
     maxDelay: 0.005,
     frequency: 5,
-    depth: 0.1,
+    depth: 0.05,
     type: 'sine',
     wet: 1
   },

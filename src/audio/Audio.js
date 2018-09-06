@@ -12,7 +12,7 @@ function Audio (settings) {
   const vibrato = new Tone.Vibrato(settings.vibrato).connect(filter)
   const tremolo = new Tone.Tremolo(settings.tremolo).connect(vibrato).start()
 
-  const mixer = new Tone.Volume({volume: -6}).connect(tremolo)
+  const mixer = new Tone.Volume({volume: 0}).connect(tremolo)
 
   const mouseOn = false
 
@@ -24,13 +24,16 @@ function Audio (settings) {
   const fifthVolume = new Tone.Volume().connect(mixer)
   const seventhVolume = new Tone.Volume().connect(mixer)
 
+  const majorSecond = new Tone.Synth(settings.synths).connect(thirdVolume)
   const minorThird = new Tone.Synth(settings.synths).connect(thirdVolume)
   const majorThird = new Tone.Synth(settings.synths).connect(thirdVolume)
+  const perfectFourth = new Tone.Synth(settings.synths).connect(thirdVolume)
   const diminishedFifth = new Tone.Synth(settings.synths).connect(fifthVolume)
   const perfectFifth = new Tone.Synth(settings.synths).connect(fifthVolume)
   const augmentedFifth = new Tone.Synth(settings.synths).connect(fifthVolume)
   const minorSeventh = new Tone.Synth(settings.synths).connect(seventhVolume)
   const majorSeventh = new Tone.Synth(settings.synths).connect(seventhVolume)
+  const sixthDiminishedSeventh = new Tone.Synth(settings.synths).connect(seventhVolume)
 
   const keyDowns = {
     KeyQ: false,
@@ -38,7 +41,15 @@ function Audio (settings) {
     KeyW: false,
     KeyS: false,
     KeyD: false,
+    KeyE: false,
     KeyF: false,
+    KeyR: false,
+    KeyG: false,
+    KeyT: false,
+    KeyZ: false,
+    KeyX: false,
+    KeyC: false,
+    KeyV: false,
 
     Space: false
   }
@@ -75,13 +86,16 @@ function Audio (settings) {
     fifthVolume,
     seventhVolume,
 
+    majorSecond,
     minorThird,
     majorThird,
+    perfectFourth,
     diminishedFifth,
     perfectFifth,
     augmentedFifth,
     minorSeventh,
     majorSeventh,
+    sixthDiminishedSeventh,
 
     keyDowns,
 
@@ -91,7 +105,15 @@ function Audio (settings) {
       KeyW: [rootNote, minorThird, diminishedFifth],
       KeyS: [rootNote, minorThird, perfectFifth],
       KeyD: [rootNote, majorThird, perfectFifth, minorSeventh],
-      KeyF: [rootNote, majorThird, perfectFifth, majorSeventh],
+      KeyE: [rootNote, majorThird, perfectFifth, majorSeventh],
+      KeyF: [rootNote, minorThird, perfectFifth, minorSeventh],
+      KeyR: [rootNote, minorThird, perfectFifth, majorSeventh],
+      KeyG: [rootNote, minorThird, diminishedFifth, minorSeventh],
+      KeyT: [rootNote, minorThird, diminishedFifth, sixthDiminishedSeventh],
+      KeyZ: [rootNote, majorThird, perfectFifth, sixthDiminishedSeventh],
+      KeyX: [rootNote, minorThird, perfectFifth, sixthDiminishedSeventh],
+      KeyC: [rootNote, majorSecond, perfectFifth],
+      KeyV: [rootNote, perfectFourth, perfectFifth],
 
       Space: [bassNote]
     },

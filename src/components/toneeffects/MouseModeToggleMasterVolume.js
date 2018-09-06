@@ -20,7 +20,9 @@ function MouseModeToggleMasterVolume (props) {
       <div id="master-volume" className="toggle-volume-element">
         <label htmlFor="mastervolume">Volume</label>
         <input
+          id="master-volume-slider"
           type="range"
+          className="slider"
           name="mastervolume"
           onChange={handleVolumeChange}
           value={props.masterVolume.volume + 100}

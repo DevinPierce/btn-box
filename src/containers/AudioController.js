@@ -20,7 +20,15 @@ class AudioController extends Component {
       KeyW: false,
       KeyS: false,
       KeyD: false,
+      KeyE: false,
       KeyF: false,
+      KeyR: false,
+      KeyG: false,
+      KeyT: false,
+      KeyZ: false,
+      KeyX: false,
+      KeyC: false,
+      KeyV: false,
 
       Space: false
     }
@@ -28,17 +36,20 @@ class AudioController extends Component {
 
   circleControlProps = () => {
     const setNotes = (rootNote) => {
-      const intervals = this.audio.harmonize(rootNote, [-12, 3, 4, 6, 7, 8, 10, 11])
+      const intervals = this.audio.harmonize(rootNote, [-12, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11])
       console.log(rootNote, intervals);
       this.audio.bassNote.frequency.value = intervals[0]
       this.audio.rootNote.frequency.value = rootNote
-      this.audio.minorThird.frequency.value = intervals[1]
-      this.audio.majorThird.frequency.value = intervals[2]
-      this.audio.diminishedFifth.frequency.value = intervals[3]
-      this.audio.perfectFifth.frequency.value = intervals[4]
-      this.audio.augmentedFifth.frequency.value = intervals[5]
-      this.audio.minorSeventh.frequency.value = intervals[6]
-      this.audio.majorSeventh.frequency.value = intervals[7]
+      this.audio.majorSecond.frequency.value = intervals[1]
+      this.audio.minorThird.frequency.value = intervals[2]
+      this.audio.majorThird.frequency.value = intervals[3]
+      this.audio.perfectFourth.frequency.value = intervals[4]
+      this.audio.diminishedFifth.frequency.value = intervals[5]
+      this.audio.perfectFifth.frequency.value = intervals[6]
+      this.audio.augmentedFifth.frequency.value = intervals[7]
+      this.audio.sixthDiminishedSeventh.frequency.value = intervals[8]
+      this.audio.minorSeventh.frequency.value = intervals[9]
+      this.audio.majorSeventh.frequency.value = intervals[10]
     }
 
     const toneStart = () => {
@@ -74,16 +85,19 @@ class AudioController extends Component {
     }
     const changeYValue = (value) => {
       console.log('Y', value)
-      const intervals = this.audio.harmonize(value, [-12, 3, 4, 6, 7, 8, 10, 11])
+      const intervals = this.audio.harmonize(value, [-12, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11])
       this.audio.bassNote.frequency.value = intervals[0]
       this.audio.rootNote.frequency.value = value
-      this.audio.minorThird.frequency.value = intervals[1]
-      this.audio.majorThird.frequency.value = intervals[2]
-      this.audio.diminishedFifth.frequency.value = intervals[3]
-      this.audio.perfectFifth.frequency.value = intervals[4]
-      this.audio.augmentedFifth.frequency.value = intervals[5]
-      this.audio.minorSeventh.frequency.value = intervals[6]
-      this.audio.majorSeventh.frequency.value = intervals[7]
+      this.audio.majorSecond.frequency.value = intervals[1]
+      this.audio.minorThird.frequency.value = intervals[2]
+      this.audio.majorThird.frequency.value = intervals[3]
+      this.audio.perfectFourth.frequency.value = intervals[4]
+      this.audio.diminishedFifth.frequency.value = intervals[5]
+      this.audio.perfectFifth.frequency.value = intervals[6]
+      this.audio.augmentedFifth.frequency.value = intervals[7]
+      this.audio.sixthDiminishedSeventh.frequency.value = intervals[8]
+      this.audio.minorSeventh.frequency.value = intervals[9]
+      this.audio.majorSeventh.frequency.value = intervals[10]
     }
     const toneStart = () => {
       this.audio.mouseOn = true
@@ -112,7 +126,7 @@ class AudioController extends Component {
       changeXValue,
       changeYValue,
       toneStart,
-    toneStop,
+      toneStop,
     }
   }
 
@@ -180,19 +194,23 @@ class AudioController extends Component {
         changeWaveform:(setting) => {
           this.audio.bassNote.oscillator.type = setting
           this.audio.rootNote.oscillator.type = setting
+          this.audio.majorSecond.oscillator.type = setting
           this.audio.minorThird.oscillator.type = setting
           this.audio.majorThird.oscillator.type = setting
+          this.audio.perfectFourth.oscillator.type = setting
           this.audio.diminishedFifth.oscillator.type = setting
           this.audio.perfectFifth.oscillator.type = setting
           this.audio.augmentedFifth.oscillator.type = setting
           this.audio.minorSeventh.oscillator.type = setting
           this.audio.majorSeventh.oscillator.type = setting
+          this.audio.sixthDiminishedSeventh.oscillator.type = setting
         },
         filterFrequency:(value) => {
           console.log('changing frequency');
           this.audio.filter.frequency.value = value
           this.props.changeEffectValueAction('filter', 'frequency', value)
           console.log(this.audio.filter.frequency.value)
+          console.log(this.audio.filter)
         },
         filterResonance:(value) => {
           console.log('changing resonance');
@@ -321,16 +339,29 @@ class AudioController extends Component {
         key === 'KeyW' ||
         key === 'KeyS' ||
         key === 'KeyD' ||
+        key === 'KeyE' ||
         key === 'KeyF' ||
+        key === 'KeyR' ||
+        key === 'KeyG' ||
+        key === 'KeyT' ||
+        key === 'KeyZ' ||
+        key === 'KeyX' ||
+        key === 'KeyC' ||
+        key === 'KeyV' ||
         key === 'Space')
     }
 
     document.body.addEventListener('keydown', event=>{
-      const key = event.code
-      if (checkIfControlKey(key)){
-        event.preventDefault()
-        if (this.audio.keyDowns[key] === false){
-          this.keyDown(key)
+      if (!event.ctrlKey &&
+          !event.altKey &&
+          !event.metaKey &&
+          !event.shiftKey){
+        const key = event.code
+        if (checkIfControlKey(key)){
+          event.preventDefault()
+          if (this.audio.keyDowns[key] === false){
+            this.keyDown(key)
+          }
         }
       }
     })
