@@ -13,3 +13,10 @@ export function changeEffectValueAction(effect, setting, value) {
     value
   }
 }
+
+export function changeWaveformAction(waveform) {
+  return {
+    type: 'CHANGE_WAVEFORM',
+    waveform
+  }
+}

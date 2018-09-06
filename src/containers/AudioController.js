@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 
-import {changeMasterVolumeAction, changeEffectValueAction} from '../redux/actions/audioSettingsActions'
+import {changeMasterVolumeAction,
+  changeEffectValueAction,
+  changeWaveformAction} from '../redux/actions/audioSettingsActions'
 
 import Audio from '../audio/Audio'
 
@@ -204,6 +206,7 @@ class AudioController extends Component {
           this.audio.minorSeventh.oscillator.type = setting
           this.audio.majorSeventh.oscillator.type = setting
           this.audio.sixthDiminishedSeventh.oscillator.type = setting
+          this.props.changeWaveformAction(setting)
         },
         filterFrequency:(value) => {
           console.log('changing frequency');
@@ -388,7 +391,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     changeMasterVolumeAction: (value) => dispatch(changeMasterVolumeAction(value)),
-    changeEffectValueAction: (effect, setting, value) => dispatch(changeEffectValueAction(effect, setting, value))
+    changeEffectValueAction: (effect, setting, value) => dispatch(changeEffectValueAction(effect, setting, value)),
+    changeWaveformAction: (waveform) => dispatch(changeWaveformAction(waveform))
   }
 }
 

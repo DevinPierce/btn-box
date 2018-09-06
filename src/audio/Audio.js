@@ -2,7 +2,7 @@ import Tone from 'tone'
 
 function Audio (settings) {
 
-  const limiter = new Tone.Limiter().toMaster()
+  const limiter = new Tone.Limiter({threshold: -12}).toMaster()
 
   const master = new Tone.Volume(settings.master).connect(limiter)
 
@@ -108,8 +108,8 @@ function Audio (settings) {
       KeyE: [rootNote, majorThird, perfectFifth, majorSeventh],
       KeyF: [rootNote, minorThird, perfectFifth, minorSeventh],
       KeyR: [rootNote, minorThird, perfectFifth, majorSeventh],
-      KeyG: [rootNote, minorThird, diminishedFifth, minorSeventh],
-      KeyT: [rootNote, minorThird, diminishedFifth, sixthDiminishedSeventh],
+      KeyG: [rootNote, minorThird, diminishedFifth, sixthDiminishedSeventh],
+      KeyT: [rootNote, minorThird, diminishedFifth, minorSeventh],
       KeyZ: [rootNote, majorThird, perfectFifth, sixthDiminishedSeventh],
       KeyX: [rootNote, minorThird, perfectFifth, sixthDiminishedSeventh],
       KeyC: [rootNote, majorSecond, perfectFifth],

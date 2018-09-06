@@ -95,6 +95,9 @@
   border-color: black;
   width: 23%;
 }
+.selected{
+  background-color: grey;
+}
 
 #filter-controls{
   padding: 2%;
@@ -295,12 +298,37 @@
 }
 
 #keyboard-view{
-  display: grid;
+  display: flex;
+  flex-direction: column;
+}
+
+.keyboard-row{
+  display: flex;
+  flex-direction: row;
+}
+
+#row-two{
+  margin-left: 14px;
+}
+#row-three{
+  margin-left: 46px;
+}
+#space-bar{
+  margin-left: 46px;
+}
+#space-bar>div{
+  width: 226px;
 }
 /* need seperate grids for each keyboard row?  */
 .key{
-
+  height: 40px;
+  width: 40px;
+  border-style: solid;
+  border-color: black;
+  border-radius: 10px;
+  padding: 5px;
+  margin: 5px;
 }
-.lit{
+.pressed{
   background-color: black;
 }

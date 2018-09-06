@@ -7,7 +7,9 @@ export default function Tone (props) {
 
   return (
     <div id="tone-controls" className="tone-effect-control">
-      <Waveform changeWaveform={props.toneControls.changeWaveform} />
+      <Waveform
+        changeWaveform={props.toneControls.changeWaveform}
+       />
       <Filter
         filterFrequency={props.toneControls.filterFrequency}
         filterResonance={props.toneControls.filterResonance}
