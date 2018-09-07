@@ -4,7 +4,10 @@ function Audio (settings) {
 
   const limiter = new Tone.Limiter({threshold: -12}).toMaster()
 
+  const analyser = new Tone.Analyser({size: 128, smoothing: 0.2})
+
   const master = new Tone.Volume(settings.master).connect(limiter)
+  master.connect(analyser)
 
   const reverb = new Tone.Freeverb(settings.reverb).connect(master)
   const delay = new Tone.FeedbackDelay(settings.delay).connect(reverb)
@@ -58,6 +61,10 @@ function Audio (settings) {
   //   return Tone.Frequency(frequency).transpose(interval)
   // }
 
+  const convertFrequencyToNote = (frequency) => {
+    return Tone.Frequency(frequency).toNote()
+  }
+
   const harmonize = (frequency, intervals) => {
     return Tone.Frequency(frequency).harmonize(intervals)
   }
@@ -68,6 +75,8 @@ function Audio (settings) {
   // }
 
   return {
+    analyser,
+
     master,
 
     reverb,
@@ -122,6 +131,7 @@ function Audio (settings) {
     activeNotes: [],
 
     // transpose,
+    convertFrequencyToNote,
     harmonize,
     // updateSettings,
   }

@@ -11,6 +11,7 @@ export default function Tone (props) {
         changeWaveform={props.toneControls.changeWaveform}
        />
       <Filter
+        filterType={props.toneControls.filterType}
         filterFrequency={props.toneControls.filterFrequency}
         filterResonance={props.toneControls.filterResonance}
       />

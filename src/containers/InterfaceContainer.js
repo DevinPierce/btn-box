@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 // import MouseControlContainer from './MouseControlContainer'
 import ToneEffectsBarContainer from './ToneEffectsBarContainer'
 import MouseKeyboardContainer from './MouseKeyboardContainer'
-// import KeyboardViewContainer from './KeyboardViewContainer'
+// import KeyboardViewFrequencyDisplayContainer from './KeyboardViewFrequencyDisplayContainer'
 
 export default class InterfaceContainer extends Component {
 
@@ -17,6 +17,7 @@ export default class InterfaceContainer extends Component {
           circleControlProps={this.props.circleControlProps}
           chromaticControlProps={this.props.chromaticControlProps}
           keyDowns={this.props.keyDowns}
+          frequencyNoteDataProps={this.props.frequencyNoteDataProps}
         />
       </div>
     )

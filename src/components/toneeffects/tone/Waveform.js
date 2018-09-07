@@ -9,7 +9,7 @@ export default function Waveform (props) {
     'Triangle',
     'Square',
     'Sawtooth',
-    'Sine4',
+    'Sine2',
     'Triangle4',
     'Square4',
     'Sawtooth4',

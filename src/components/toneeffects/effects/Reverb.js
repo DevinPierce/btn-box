@@ -10,9 +10,6 @@ function Reverb (props) {
       case "roomSize":
         props.roomSize(event.target.value / 100)
         break;
-      case "dampening":
-        props.dampening(event.target.value)
-        break;
       case "wet":
         props.wet(event.target.value / 100)
         break;
@@ -32,18 +29,7 @@ function Reverb (props) {
         data-control="roomSize"
         value={props.reverb.roomSize * 100}
       />
-      <label htmlFor="dampening" className="slider-label">Dampening</label>
-      <input
-        type="range"
-        name="dampening"
-        className="slider"
-        onChange={handleChange}
-        data-control="dampening"
-        min='1'
-        max='20000'
-        value={props.reverb.dampening}
-      />
-      <label htmlFor="wet" className="slider-label">Wet/Dry</label>
+      <label htmlFor="wet" className="slider-label">Dry/Wet</label>
       <input
         type="range"
         name="wet"

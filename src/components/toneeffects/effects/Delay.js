@@ -40,7 +40,7 @@ function Delay (props) {
         data-control="feedback"
         value={props.delay.feedback * 100}
       />
-      <label htmlFor="wet" className="slider-label">Wet/Dry</label>
+      <label htmlFor="wet" className="slider-label">Dry/Wet</label>
       <input
         type="range"
         name="wet"

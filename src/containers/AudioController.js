@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 
 import {changeMasterVolumeAction,
   changeEffectValueAction,
-  changeWaveformAction} from '../redux/actions/audioSettingsActions'
+  changeWaveformAction,
+  changeFilterTypeAction} from '../redux/actions/audioSettingsActions'
 
 import Audio from '../audio/Audio'
 
@@ -208,12 +209,19 @@ class AudioController extends Component {
           this.audio.sixthDiminishedSeventh.oscillator.type = setting
           this.props.changeWaveformAction(setting)
         },
+        filterType:(type) => {
+          console.log('changing type');
+          this.audio.filter.type = type
+          this.props.changeFilterTypeAction(type)
+          console.log(this.audio.filter.type)
+        },
         filterFrequency:(value) => {
           console.log('changing frequency');
           this.audio.filter.frequency.value = value
           this.props.changeEffectValueAction('filter', 'frequency', value)
           console.log(this.audio.filter.frequency.value)
           console.log(this.audio.filter)
+          console.log(this.props.audioSettings)
         },
         filterResonance:(value) => {
           console.log('changing resonance');
@@ -231,12 +239,6 @@ class AudioController extends Component {
           this.audio.reverb.roomSize.value = value
           this.props.changeEffectValueAction('reverb', 'roomSize', value)
           console.log(this.audio.reverb.roomSize.value)
-        },
-        dampening:(value) => {
-          console.log('changing dampening');
-          this.audio.reverb.dampening.value = value
-          this.props.changeEffectValueAction('reverb', 'dampening', value)
-          console.log(this.audio.reverb.dampening.value);
         },
         wet:(value) => {
           console.log('changing wet');
@@ -301,6 +303,12 @@ class AudioController extends Component {
           this.props.changeEffectValueAction('tremolo', 'depth', value)
           console.log(this.audio.tremolo.depth.value);
         },
+        wet:(value) => {
+          console.log('changing wet');
+          this.audio.tremolo.wet.value = value
+          this.props.changeEffectValueAction('tremolo', 'wet', value)
+          console.log(this.audio.tremolo.wet.value);
+        },
       }
     }
 
@@ -315,20 +323,39 @@ class AudioController extends Component {
 
   }
 
+  frequencyNoteDataProps = () => {
+    const getAnalyserValues = () => {
+      return this.audio.analyser.getValue()
+    }
+    const getRootNote = () => {
+      return this.audio.convertFrequencyToNote(this.audio.rootNote.frequency.value)
+    }
+    const getRootFrequency = () => {
+      return this.audio.rootNote.frequency.value
+    }
+    return {
+      getAnalyserValues,
+      getRootNote,
+      getRootFrequency,
+    }
+  }
+
   render(){
     return (
       <InterfaceContainer
         toneEffectsProps={this.toneEffectsProps()}
         circleControlProps={this.circleControlProps()}
         chromaticControlProps={this.chromaticControlProps()}
+        frequencyNoteDataProps={this.frequencyNoteDataProps()}
         keyDowns={this.state}
       />
     )
   }
 
-  // componentDidUpdate(prevProps){
+  componentDidUpdate(prevProps){
   // NOTE: redux state changes are present in props, but do not actually affect rendering, so I may be able to prevent a lot of unnecessary renders by preventing them on AudioController prop changes
-  // }
+  // console.log(this.audio.analyser.getValue());
+  }
 
   componentDidMount(){
     this.audio = Audio(this.props.audioSettings)
@@ -392,7 +419,8 @@ function mapDispatchToProps(dispatch) {
   return {
     changeMasterVolumeAction: (value) => dispatch(changeMasterVolumeAction(value)),
     changeEffectValueAction: (effect, setting, value) => dispatch(changeEffectValueAction(effect, setting, value)),
-    changeWaveformAction: (waveform) => dispatch(changeWaveformAction(waveform))
+    changeWaveformAction: (waveform) => dispatch(changeWaveformAction(waveform)),
+    changeFilterTypeAction: (type) => dispatch(changeFilterTypeAction(type))
   }
 }
 

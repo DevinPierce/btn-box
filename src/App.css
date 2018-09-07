@@ -1,9 +1,12 @@
+body{
+  background-color: #595959;
+}
+
 .slider{
   -webkit-appearance: none;
-    width: 100%;
-    height: 15px;
-    border-radius: 5px;
-    background: #d3d3d3;
+    height: 12px;
+    border-radius: 0px;
+    background: #8c8c8c;
     outline: none;
     opacity: 0.7;
     -webkit-transition: .2s;
@@ -13,20 +16,22 @@
 .slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
-    width: 15px;
-    height: 15px;
+    width: 12px;
+    height: 12px;
     background: black;
     cursor: pointer;
 }
 
 .slider::-moz-range-thumb {
-    width: 15px;
-    height: 15px;
+    width: 12px;
+    height: 12px;
     background: black;
     cursor: pointer;
 }
 
 #interface-container{
+  background-color: #595959;
+  margin: 1%;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -41,8 +46,9 @@
 .tone-effect-control{
   width: 400px;
   height: 250px;
-  border-style: solid;
-  border-color: black;
+  border-radius: 10px;
+  background-color: #d9d9d9;
+  margin: 6px;
 }
 
 #mouse-mode-toggle-master-volume{
@@ -65,6 +71,7 @@
   width: 10%;
 }
 #master-volume-slider{
+  width: 180px;
   transform: translateX(-70px) translateY(100px) rotate(-90deg);
 }
 
@@ -93,7 +100,10 @@
 .waveform-button{
   border-style: solid;
   border-color: black;
-  width: 23%;
+  border-radius: 8px;
+  width: 21%;
+  margin: 4px;
+  transition: 0.15s;
 }
 .selected{
   background-color: grey;
@@ -101,7 +111,7 @@
 
 #filter-controls{
   padding: 2%;
-  height: 46%;
+  height: 30%;
   width: 96%;
   display: flex;
   flex-direction: column;
@@ -127,6 +137,15 @@
   flex-direction: column;
   justify-content: center;
 }
+#filter-select>select{
+  background-color: #8c8c8c;
+}
+#filter-select>select:after{
+
+}
+#filter-select>select:focus{
+  outline: none;
+}
 
 #filter-sliders{
   width: 66%;
@@ -146,8 +165,6 @@
 #effects-controls{
   width: 400px;
   height: 250px;
-  border-style: solid;
-  border-color: black;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -155,9 +172,10 @@
 }
 
 .effect-control{
-  padding: 2%;
-  height: 46%;
-  width: 46%;
+  padding: 0% 2% 0% 2%;
+  margin: 0% 2% 0% 2%;
+  height: 40%;
+  width: 40%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -165,22 +183,25 @@
 
 .effect-label{
   text-align: center;
+  font-size: 14pt;
 }
 
 .slider-label{
   text-align: center;
   display: block;
+  font-size: 8pt;
 }
 
 .slider{
-  width: 180px;
+  width: 160px;
 }
 
 #mouse-control-container{
   display: flex;
   flex-direction: column;
-  border-style: solid;
-  border-color: black;
+  border-radius: 10px;
+  margin: 6px;
+  background-color: #d9d9d9;
   height: 500px;
   width: 700px;
 }
@@ -197,6 +218,8 @@
   margin-left: 150px;
   margin-right: 150px;
   position: relative;
+  top: 2px;
+  right: 50px;
 }
 
 .note-slice{
@@ -293,13 +316,22 @@
   top: 50%; left: 50%;
 }
 
-#keyboard-view-container{
-
+#keyboard-view-frequency-display-container{
+  background-color: #d9d9d9;
+  border-radius: 10px;
+  margin: 6px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 }
 
 #keyboard-view{
   display: flex;
   flex-direction: column;
+}
+
+#frequency-note-display{
+
 }
 
 .keyboard-row{
@@ -311,10 +343,10 @@
   margin-left: 14px;
 }
 #row-three{
-  margin-left: 46px;
+  margin-left: 48px;
 }
 #space-bar{
-  margin-left: 46px;
+  margin-left: 48px;
 }
 #space-bar>div{
   width: 226px;
@@ -330,5 +362,13 @@
   margin: 5px;
 }
 .pressed{
-  background-color: black;
+  background-color: #808080;
+}
+
+#frequency-note-display{
+  width: 350px;
+}
+
+canvas{
+  margin: 25px;
 }

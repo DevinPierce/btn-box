@@ -6,8 +6,11 @@ function Filter (props) {
 
   const handleChange = (event) => {
     switch (event.target.dataset.control){
+      case "type":
+        props.filterType(event.target.value)
+        break;
       case "frequency":
-        props.filterFrequency(event.target.value)
+        props.filterFrequency(event.target.value * 100)
         break;
       case "resonance":
         props.filterResonance(event.target.value / 10)
@@ -21,8 +24,15 @@ function Filter (props) {
       <div className="tone-label">Filter</div>
       <div id="filter-inputs">
         <div id="filter-select" className="filter-inputs">
-          <select>
-
+          <label htmlFor="type" className="slider-label">Type</label>
+          <select
+            name="type"
+            data-control="type"
+            onChange={handleChange}
+            defaultValue={props.filter.type}
+            >
+            <option value="highpass" >High-pass</option>
+            <option value="lowpass" >Low-pass</option>
           </select>
         </div>
         <div id="filter-sliders" className="filter-inputs">
@@ -34,8 +44,8 @@ function Filter (props) {
             onChange={handleChange}
             data-control="frequency"
             min="1"
-            max="20000"
-            value={props.filter.frequency}
+            max="200"
+            value={props.filter.frequency / 100}
           />
           <label htmlFor="resonance" className="slider-label">Resonance</label>
           <input
@@ -45,7 +55,7 @@ function Filter (props) {
             onChange={handleChange}
             data-control="resonance"
             min="0"
-            max="100"
+            max="30"
             value={props.filter.Q * 10}
           />
         </div>

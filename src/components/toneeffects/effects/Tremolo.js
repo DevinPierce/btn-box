@@ -12,6 +12,9 @@ function Tremolo (props) {
       case "depth":
         props.depth(event.target.value / 100)
         break;
+      case "wet":
+        props.wet(event.target.value / 100)
+        break;
       default:
     }
   }
@@ -36,6 +39,15 @@ function Tremolo (props) {
         onChange={handleChange}
         data-control="depth"
         value={props.tremolo.depth * 100}
+      />
+      <label htmlFor="wet" className="slider-label">Dry/Wet</label>
+      <input
+        type="range"
+        name="wet"
+        className="slider"
+        onChange={handleChange}
+        data-control="wet"
+        value={props.tremolo.wet * 100}
       />
     </span>
   )

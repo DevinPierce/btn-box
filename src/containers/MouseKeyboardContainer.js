@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import MouseControlContainer from './MouseControlContainer'
-import KeyboardViewContainer from './KeyboardViewContainer'
+import KeyboardViewFrequencyDisplayContainer from './KeyboardViewFrequencyDisplayContainer'
 
 export default class MouseKeyboardContainer extends Component {
 
@@ -12,8 +12,9 @@ export default class MouseKeyboardContainer extends Component {
           circleControlProps={this.props.circleControlProps}
           chromaticControlProps={this.props.chromaticControlProps}
         />
-        <KeyboardViewContainer
+        <KeyboardViewFrequencyDisplayContainer
           keyDowns={this.props.keyDowns}
+          frequencyNoteDataProps={this.props.frequencyNoteDataProps}
         />
       </div>
     )

@@ -12,12 +12,11 @@ const initialState = {
   },
 
   master: {
-    volume: -6
+    volume: 0
   },
 
   reverb: {
     roomSize: 0.1,
-    dampening: 20000,
     wet: 0.12
   },
   delay: {
@@ -31,17 +30,16 @@ const initialState = {
     Q: 1,
   },
   vibrato: {
-    maxDelay: 0.005,
     frequency: 5,
     depth: 0.05,
     type: 'sine',
-    wet: 0
+    wet: 1
   },
   tremolo: {
     frequency: 8,
     type: 'sine',
-    depth: 0,
-    spread: 0,
+    depth: 0.5,
+    spread: 180,
     wet: 0
   },
 }
@@ -71,6 +69,14 @@ export default function audioSettingsReducer(state = initialState, action) {
           oscillator: {
             type: action.waveform
           }
+        }
+      }
+    case 'CHANGE_FILTER_TYPE':
+      return {
+        ...state,
+        filter: {
+          ...state.filter,
+          type: action.filterType
         }
       }
     default:

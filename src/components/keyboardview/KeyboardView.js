@@ -16,7 +16,7 @@ export default function KeyboardView (props) {
       <div id="row-two" className="keyboard-row">
         <KeyView key="A" k="A" pressed={props.keyDowns["KeyA"]} chord="Maj" />
         <KeyView key="S" k="S" pressed={props.keyDowns["KeyS"]} chord="min" />
-        <KeyView key="D" k="D" pressed={props.keyDowns["KeyD"]} chord="Dom7" />
+        <KeyView key="D" k="D" pressed={props.keyDowns["KeyD"]} chord="D7" />
         <KeyView key="F" k="F" pressed={props.keyDowns["KeyF"]} chord="min7" />
         <KeyView key="G" k="G" pressed={props.keyDowns["KeyG"]} chord="dim7" />
       </div>
