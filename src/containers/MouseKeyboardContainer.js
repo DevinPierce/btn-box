@@ -9,11 +9,11 @@ export default class MouseKeyboardContainer extends Component {
     return (
       <div id="mouse-keyboard-container">
         <MouseControlContainer
+          visualizerProps={this.props.visualizerProps}
           circleControlProps={this.props.circleControlProps}
           chromaticControlProps={this.props.chromaticControlProps}
         />
         <KeyboardViewFrequencyDisplayContainer
-          keyDowns={this.props.keyDowns}
           frequencyNoteDataProps={this.props.frequencyNoteDataProps}
         />
       </div>

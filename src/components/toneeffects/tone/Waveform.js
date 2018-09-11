@@ -9,14 +9,6 @@ export default function Waveform (props) {
     'Triangle',
     'Square',
     'Sawtooth',
-    'Sine2',
-    'Triangle4',
-    'Square4',
-    'Sawtooth4',
-    'Sine8',
-    'Triangle8',
-    'Square8',
-    'Sawtooth8',
   ]
 
   const renderButtons = () => {

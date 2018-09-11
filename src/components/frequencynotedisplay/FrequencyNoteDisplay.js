@@ -22,10 +22,28 @@ export default class FrequencyNoteDisplay extends React.Component {
     ctx.font = "30px Arial";
     setInterval(() => {
       ctx.clearRect(0, 0, 300, 200);
-      // ctx.fillText(Math.random(), 100, 100)
-      ctx.fillText(this.props.getRootNote(), 130, 75)
+      // const data = this.props.getAnalyserValues().slice(0,48)
+      // const barWidth = (300 / data.length);
+    	// let barHeight;
+    	// let x = 0;
+      // for(var i = 0; i < data.length; i++) {
+      //   barHeight = data[i];
+      //   ctx.fillStyle = 'rgb(' + (barHeight+250) + ',50,50)';
+      //   ctx.fillRect(x,200-barHeight/2,barWidth,barHeight);
+      //
+      //   x += barWidth + 1;
+      // }
+      let rootNote = this.props.getRootNote()
+      if (rootNote[1] === '#'){
+        rootNote = rootNote[0] + '\u266F'
+      } else if (rootNote[1] === 'b'){
+        rootNote = rootNote[0] + '\u266D'
+      } else {
+        rootNote = rootNote[0]
+      }
+      ctx.fillText(rootNote, 130, 75)
       ctx.fillText(Math.round(this.props.getRootFrequency()) + 'Hz', 110, 155)
-    }, 75)
+    }, 50)
   }
 
 }

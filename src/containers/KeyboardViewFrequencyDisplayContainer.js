@@ -8,9 +8,7 @@ export default class KeyboardViewFrequencyDisplayContainer extends Component {
   render(){
     return (
       <div id="keyboard-view-frequency-display-container">
-        <KeyboardView
-          {...this.props}
-        />
+        <KeyboardView />
         <FrequencyNoteDisplay
           {...this.props.frequencyNoteDataProps}
         />

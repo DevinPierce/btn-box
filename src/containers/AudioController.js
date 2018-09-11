@@ -5,7 +5,9 @@ import { connect } from 'react-redux';
 import {changeMasterVolumeAction,
   changeEffectValueAction,
   changeWaveformAction,
-  changeFilterTypeAction} from '../redux/actions/audioSettingsActions'
+  // changeFilterTypeAction,
+} from '../redux/actions/audioSettingsActions'
+import {toggleKeyDownAction} from '../redux/actions/keyDownActions'
 
 import Audio from '../audio/Audio'
 
@@ -14,28 +16,6 @@ import InterfaceContainer from './InterfaceContainer'
 // const isEqual = require("react-fast-compare");
 
 class AudioController extends Component {
-
-  constructor(){
-    super()
-    this.state = {
-      KeyQ: false,
-      KeyA: false,
-      KeyW: false,
-      KeyS: false,
-      KeyD: false,
-      KeyE: false,
-      KeyF: false,
-      KeyR: false,
-      KeyG: false,
-      KeyT: false,
-      KeyZ: false,
-      KeyX: false,
-      KeyC: false,
-      KeyV: false,
-
-      Space: false
-    }
-  }
 
   circleControlProps = () => {
     const setNotes = (rootNote) => {
@@ -80,12 +60,18 @@ class AudioController extends Component {
 
   chromaticControlProps = () => {
     // TODO: notes should fade in in ascending order. May need to work out the exact dimensions of the chromatic input field and all the related math before it makes sense to figure this out. also, make sure volume settings are normalized when switching to circle mode
-    const changeXValue = (value) => {
-      this.audio.thirdVolume.volume.value = value
-      this.audio.fifthVolume.volume.value = value
-      this.audio.seventhVolume.volume.value = value
-      console.log('X', value)
-    }
+    // const changeXValue = (value) => {
+    //   if (this.audio.thirdVolume.volume.value > -0.9 || value > -0.9){
+    //     this.audio.thirdVolume.volume.value = value * 15
+    //   }
+    //   if (this.audio.fifthVolume.volume.value > -0.6 || value > -0.6){
+    //     this.audio.fifthVolume.volume.value = value * 30
+    //   }
+    //   if (this.audio.seventhVolume.volume.value > -0.3 || value > -0.3){
+    //     this.audio.seventhVolume.volume.value = value * 60
+    //   }
+    //   console.log('X', value)
+    // }
     const changeYValue = (value) => {
       console.log('Y', value)
       const intervals = this.audio.harmonize(value, [-12, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11])
@@ -126,7 +112,7 @@ class AudioController extends Component {
     }
 
     return {
-      changeXValue,
+      // changeXValue,
       changeYValue,
       toneStart,
       toneStop,
@@ -135,9 +121,7 @@ class AudioController extends Component {
 
   toggleKeydown = (key) => {
     this.audio.keyDowns[key] = !this.audio.keyDowns[key]
-    this.setState({
-      [key]: !this.state[key]
-    })
+    this.props.toggleKeyDownAction(key)
   }
 
   keyDown = (key) => {
@@ -194,7 +178,11 @@ class AudioController extends Component {
 
     const toneControls = () => {
       return {
-        changeWaveform:(setting) => {
+        changeWaveform:(waveform) => {
+          const currentPartials = this.props.audioSettings.synths.oscillator.type.split('').filter(char => {
+            return !isNaN(Number(char))
+          }).join('')
+          const setting = waveform + currentPartials
           this.audio.bassNote.oscillator.type = setting
           this.audio.rootNote.oscillator.type = setting
           this.audio.majorSecond.oscillator.type = setting
@@ -209,25 +197,44 @@ class AudioController extends Component {
           this.audio.sixthDiminishedSeventh.oscillator.type = setting
           this.props.changeWaveformAction(setting)
         },
-        filterType:(type) => {
-          console.log('changing type');
-          this.audio.filter.type = type
-          this.props.changeFilterTypeAction(type)
-          console.log(this.audio.filter.type)
-        },
-        filterFrequency:(value) => {
-          console.log('changing frequency');
-          this.audio.filter.frequency.value = value
-          this.props.changeEffectValueAction('filter', 'frequency', value)
-          console.log(this.audio.filter.frequency.value)
-          console.log(this.audio.filter)
-          console.log(this.props.audioSettings)
-        },
-        filterResonance:(value) => {
-          console.log('changing resonance');
-          this.audio.filter.Q.value = value
-          this.props.changeEffectValueAction('filter', 'Q', value)
-          console.log(this.audio.filter.Q.value)
+      //   filterType:(type) => {
+      //     console.log('changing type');
+      //     this.audio.filter.type = type
+      //     this.props.changeFilterTypeAction(type)
+      //     console.log(this.audio.filter.type)
+      //   },
+      //   filterFrequency:(value) => {
+      //     console.log('changing frequency');
+      //     this.audio.filter.frequency.value = value
+      //     this.props.changeEffectValueAction('filter', 'frequency', value)
+      //     console.log(this.audio.filter.frequency.value)
+      //     console.log(this.audio.filter)
+      //     console.log(this.props.audioSettings)
+      //   },
+      //   filterResonance:(value) => {
+      //     console.log('changing resonance');
+      //     this.audio.filter.Q.value = value
+      //     this.props.changeEffectValueAction('filter', 'Q', value)
+      //     console.log(this.audio.filter.Q.value)
+      // }
+      changePartials:(partials) => {
+        const currentWaveform = this.props.audioSettings.synths.oscillator.type.split('').filter(char => {
+          return isNaN(Number(char))
+        }).join('')
+        const setting = currentWaveform + partials
+        this.audio.bassNote.oscillator.type = setting
+        this.audio.rootNote.oscillator.type = setting
+        this.audio.majorSecond.oscillator.type = setting
+        this.audio.minorThird.oscillator.type = setting
+        this.audio.majorThird.oscillator.type = setting
+        this.audio.perfectFourth.oscillator.type = setting
+        this.audio.diminishedFifth.oscillator.type = setting
+        this.audio.perfectFifth.oscillator.type = setting
+        this.audio.augmentedFifth.oscillator.type = setting
+        this.audio.minorSeventh.oscillator.type = setting
+        this.audio.majorSeventh.oscillator.type = setting
+        this.audio.sixthDiminishedSeventh.oscillator.type = setting
+        this.props.changeWaveformAction(setting)
       }
     }
   }
@@ -324,9 +331,9 @@ class AudioController extends Component {
   }
 
   frequencyNoteDataProps = () => {
-    const getAnalyserValues = () => {
-      return this.audio.analyser.getValue()
-    }
+    // const getAnalyserValues = () => {
+    //   return this.audio.fftAnalyser.getValue()
+    // }
     const getRootNote = () => {
       return this.audio.convertFrequencyToNote(this.audio.rootNote.frequency.value)
     }
@@ -334,9 +341,18 @@ class AudioController extends Component {
       return this.audio.rootNote.frequency.value
     }
     return {
-      getAnalyserValues,
+      // getAnalyserValues,
       getRootNote,
       getRootFrequency,
+    }
+  }
+
+  visualizerProps = () => {
+    const getAnalyserValues = () => {
+      return this.audio.waveAnalyser.getValue()
+    }
+    return {
+      getAnalyserValues
     }
   }
 
@@ -344,17 +360,22 @@ class AudioController extends Component {
     return (
       <InterfaceContainer
         toneEffectsProps={this.toneEffectsProps()}
+        visualizerProps={this.visualizerProps()}
         circleControlProps={this.circleControlProps()}
         chromaticControlProps={this.chromaticControlProps()}
         frequencyNoteDataProps={this.frequencyNoteDataProps()}
-        keyDowns={this.state}
+        // keyDowns={this.state}
       />
     )
   }
 
-  componentDidUpdate(prevProps){
-  // NOTE: redux state changes are present in props, but do not actually affect rendering, so I may be able to prevent a lot of unnecessary renders by preventing them on AudioController prop changes
-  // console.log(this.audio.analyser.getValue());
+  componentDidUpdate(){
+    // NOTE: normalizes interval volume settings when switching back to circle mode
+    if (this.props.interfaceMode.circleControl === true){
+      this.audio.thirdVolume.volume.value = 0
+      this.audio.fifthVolume.volume.value = 0
+      this.audio.seventhVolume.volume.value = 0
+    }
   }
 
   componentDidMount(){
@@ -412,7 +433,9 @@ class AudioController extends Component {
 
 function mapStateToProps(state) {
   return {
-    audioSettings: state.audioSettings
+    interfaceMode: state.interfaceMode,
+    audioSettings: state.audioSettings,
+    keyDowns: state.keyDowns,
   }
 }
 function mapDispatchToProps(dispatch) {
@@ -420,7 +443,8 @@ function mapDispatchToProps(dispatch) {
     changeMasterVolumeAction: (value) => dispatch(changeMasterVolumeAction(value)),
     changeEffectValueAction: (effect, setting, value) => dispatch(changeEffectValueAction(effect, setting, value)),
     changeWaveformAction: (waveform) => dispatch(changeWaveformAction(waveform)),
-    changeFilterTypeAction: (type) => dispatch(changeFilterTypeAction(type))
+    // changeFilterTypeAction: (type) => dispatch(changeFilterTypeAction(type)),
+    toggleKeyDownAction: (key) => dispatch(toggleKeyDownAction(key)),
   }
 }
 

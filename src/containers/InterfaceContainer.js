@@ -14,9 +14,9 @@ export default class InterfaceContainer extends Component {
           toneEffectsProps={this.props.toneEffectsProps}
         />
         <MouseKeyboardContainer
+          visualizerProps={this.props.visualizerProps}
           circleControlProps={this.props.circleControlProps}
           chromaticControlProps={this.props.chromaticControlProps}
-          keyDowns={this.props.keyDowns}
           frequencyNoteDataProps={this.props.frequencyNoteDataProps}
         />
       </div>

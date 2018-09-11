@@ -1,7 +1,8 @@
 import React from 'react';
 
 import Waveform from './tone/Waveform'
-import Filter from './tone/Filter'
+// import Filter from './tone/Filter'
+import Partials from './tone/Partials'
 
 export default function Tone (props) {
 
@@ -10,10 +11,13 @@ export default function Tone (props) {
       <Waveform
         changeWaveform={props.toneControls.changeWaveform}
        />
-      <Filter
+      {/* <Filter
         filterType={props.toneControls.filterType}
         filterFrequency={props.toneControls.filterFrequency}
         filterResonance={props.toneControls.filterResonance}
+      /> */}
+      <Partials
+        changePartials={props.toneControls.changePartials}
       />
     </div>
   )

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import MouseModeToggleMasterVolume from '../components/toneeffects/MouseModeToggleMasterVolume'
+import MetaControls from '../components/toneeffects/MetaControls'
 import Tone from '../components/toneeffects/Tone'
 import Effects from '../components/toneeffects/Effects'
 
@@ -9,7 +9,7 @@ export default class ToneEffectsBarContainer extends Component {
 
     return (
       <div id="tone-effects-bar">
-        <MouseModeToggleMasterVolume
+        <MetaControls
           changeMasterVolume={this.props.toneEffectsProps.changeMasterVolume}
          />
         <Tone

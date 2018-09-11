@@ -4,15 +4,17 @@ function Audio (settings) {
 
   const limiter = new Tone.Limiter({threshold: -12}).toMaster()
 
-  const analyser = new Tone.Analyser({size: 128, smoothing: 0.2})
+  const waveAnalyser = new Tone.Analyser({size: 256, type: 'waveform'})
+  // const fftAnalyser = new Tone.Analyser({size: 256, type: 'fft'})
 
   const master = new Tone.Volume(settings.master).connect(limiter)
-  master.connect(analyser)
+  master.connect(waveAnalyser)
+  // master.connect(fftAnalyser)
 
   const reverb = new Tone.Freeverb(settings.reverb).connect(master)
   const delay = new Tone.FeedbackDelay(settings.delay).connect(reverb)
-  const filter = new Tone.Filter(settings.filter).connect(delay)
-  const vibrato = new Tone.Vibrato(settings.vibrato).connect(filter)
+  // const filter = new Tone.Filter(settings.filter).connect(delay)
+  const vibrato = new Tone.Vibrato(settings.vibrato).connect(delay)
   const tremolo = new Tone.Tremolo(settings.tremolo).connect(vibrato).start()
 
   const mixer = new Tone.Volume({volume: 0}).connect(tremolo)
@@ -75,13 +77,14 @@ function Audio (settings) {
   // }
 
   return {
-    analyser,
+    waveAnalyser,
+    // fftAnalyser,
 
     master,
 
     reverb,
     delay,
-    filter,
+    // filter,
     vibrato,
     tremolo,
 

@@ -24,11 +24,11 @@ const initialState = {
     feedback: 0.5,
     wet: 0.12
   },
-  filter: {
-    type: 'lowpass',
-    frequency: 20000,
-    Q: 1,
-  },
+  // filter: {
+  //   type: 'lowpass',
+  //   frequency: 20000,
+  //   Q: 1,
+  // },
   vibrato: {
     frequency: 5,
     depth: 0.05,
@@ -71,14 +71,14 @@ export default function audioSettingsReducer(state = initialState, action) {
           }
         }
       }
-    case 'CHANGE_FILTER_TYPE':
-      return {
-        ...state,
-        filter: {
-          ...state.filter,
-          type: action.filterType
-        }
-      }
+    // case 'CHANGE_FILTER_TYPE':
+    //   return {
+    //     ...state,
+    //     filter: {
+    //       ...state.filter,
+    //       type: action.filterType
+    //     }
+    //   }
     default:
       return state
   }

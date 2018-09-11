@@ -17,7 +17,7 @@ export default function CircleNoteSlice (props) {
       onMouseLeave={handleMouseLeave}
       >
       <div className="note-symbol">
-        {props.note}
+        {props.noteSymbol}
       </div>
     </div>
   )

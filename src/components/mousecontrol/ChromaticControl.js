@@ -1,12 +1,14 @@
 import React from 'react';
 
-export default function ChromaticControl (props) {
+import { connect } from 'react-redux';
+
+function ChromaticControl (props) {
 
   const elementHeight = 500
 
   const handleMouseMove = (event) => {
-    const scaledX = (event.nativeEvent.offsetX / 20) - 25
-    props.chromaticControlProps.changeXValue(scaledX)
+    // const scaledX = (event.nativeEvent.offsetX / 700) - 1
+    // props.chromaticControlProps.changeXValue(scaledX)
     // IDEA: x-axis should control "chord volume," icreasing volume up the triad as you go right
     let invertedY = (elementHeight - event.nativeEvent.offsetY)
     // IDEA: get Y value to scale logarithmically I think?
@@ -24,6 +26,7 @@ export default function ChromaticControl (props) {
   return (
     <div
       id="chromatic-control-field"
+      className={props.interfaceMode.chromaticControl ? "show" : "hidden"}
       onMouseMove={event=>handleMouseMove(event)}
       onMouseOver={handleMouseOver}
       onMouseOut={handleMouseOut}
@@ -33,3 +36,11 @@ export default function ChromaticControl (props) {
   )
 
 }
+
+function mapStateToProps(state) {
+  return {
+    interfaceMode: state.interfaceMode
+  }
+}
+
+export default connect(mapStateToProps)(ChromaticControl)

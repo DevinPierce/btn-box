@@ -4,11 +4,17 @@ import { connect } from 'react-redux';
 
 function WaveformButton (props) {
 
+  const parseWaveform = (string) => {
+    return string.split('').filter(char => {
+      return isNaN(Number(char))
+    }).join('')
+  }
+
   return (
     <span
-      className={props.selectedWaveform === props.type.toLowerCase() ? "waveform-button selected" : "waveform-button"}
+      className={parseWaveform(props.selectedWaveform) === props.type.toLowerCase() ? "waveform-button selected" : "waveform-button"}
       onClick={()=>props.changeWaveform(props.type.toLowerCase())}
-      >{props.type}
+      >{parseWaveform(props.type)}
     </span>
   )
 

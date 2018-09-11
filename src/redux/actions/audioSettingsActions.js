@@ -21,9 +21,9 @@ export function changeWaveformAction(waveform) {
   }
 }
 
-export function changeFilterTypeAction(filterType) {
-  return {
-    type: 'CHANGE_FILTER_TYPE',
-    filterType
-  }
-}
+// export function changeFilterTypeAction(filterType) {
+//   return {
+//     type: 'CHANGE_FILTER_TYPE',
+//     filterType
+//   }
+// }

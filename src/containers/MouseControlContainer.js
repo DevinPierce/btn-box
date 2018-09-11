@@ -1,39 +1,31 @@
 import React, { Component } from 'react';
 
-import { connect } from 'react-redux';
-
 import ChromaticControlContainer from './mousecontrol/ChromaticControlContainer'
 import CircleControlContainer from './mousecontrol/CircleControlContainer'
+import Visualizer from '../components/visualizer/Visualizer'
 
 class MouseControlContainer extends Component {
 
-  renderControlContainer = () => {
 
-    if (this.props.interfaceMode.chromaticControl){
-      return <ChromaticControlContainer
-        chromaticControlProps={this.props.chromaticControlProps}
-       />
-    } else if (this.props.interfaceMode.circleControl) {
-      return <CircleControlContainer
-        circleControlProps={this.props.circleControlProps}
-       />
-    }
-  }
 
   render(){
     return (
-      <div id="mouse-control-container">
-        {this.renderControlContainer()}
-      </div>
+      <React.Fragment>
+        <div id="mouse-control-container">
+          <Visualizer
+            {...this.props.visualizerProps}
+          />
+          <ChromaticControlContainer
+           chromaticControlProps={this.props.chromaticControlProps}
+          />
+          <CircleControlContainer
+           circleControlProps={this.props.circleControlProps}
+          />
+        </div>
+      </React.Fragment>
     )
   }
 
 }
 
-function mapStateToProps(state) {
-  return {
-    interfaceMode: state.interfaceMode
-  }
-}
-
-export default connect(mapStateToProps)(MouseControlContainer)
+export default MouseControlContainer
