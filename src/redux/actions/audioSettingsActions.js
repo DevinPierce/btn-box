@@ -1,3 +1,10 @@
+export function loadSettingsAction(settings) {
+  return {
+    type: 'LOAD_SETTINGS',
+    settings
+  }
+}
+
 export function changeMasterVolumeAction(value) {
   return {
     type: 'CHANGE_MASTER_VOLUME',

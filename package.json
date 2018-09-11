@@ -8,9 +8,11 @@
     "react-fast-compare": "^2.0.2",
     "react-redux": "^5.0.7",
     "react-scripts": "1.1.5",
+    "react-select": "^2.0.0",
     "redux": "^4.0.0",
     "redux-persist": "^5.10.0",
-    "tone": "^0.12.80"
+    "tone": "^0.12.80",
+    "uuid": "^3.3.2"
   },
   "scripts": {
     "start": "react-scripts start",

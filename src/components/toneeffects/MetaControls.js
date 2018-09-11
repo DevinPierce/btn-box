@@ -12,7 +12,9 @@ function MetaControls (props) {
       <div id="title-save-toggle-container" >
         <TitleBox />
         <ModeToggle />
-        <SaveSettings />
+        <SaveSettings
+          loadSettings={props.loadSettings}
+        />
       </div>
       <div id="master-volume-container" >
         <MasterVolume

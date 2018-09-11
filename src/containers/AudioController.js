@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 
-import {changeMasterVolumeAction,
+import {loadSettingsAction,
+  changeMasterVolumeAction,
   changeEffectValueAction,
   changeWaveformAction,
   // changeFilterTypeAction,
@@ -169,7 +170,17 @@ class AudioController extends Component {
 
   toneEffectsProps = () => {
 
-    // TODO: these should also update Redux Audio settings state, but I can worry about that later
+    const loadSettings = (settings) => {
+      // NOTE: probably want to call ".dispose" on all the old Tone objects
+      for (let key in this.audio){
+        if (this.audio[key].dispose){
+          this.audio[key].dispose()
+        }
+      }
+      this.audio = Audio(settings)
+      // NOTE: need to update store audioSettings, or all the controls won't update
+      this.props.loadSettingsAction(settings)
+    }
 
     const changeMasterVolume = (value) => {
       this.audio.master.volume.value = value
@@ -320,6 +331,7 @@ class AudioController extends Component {
     }
 
     return {
+      loadSettings,
       changeMasterVolume,
       toneControls: toneControls(),
       reverbControls: reverbControls(),
@@ -371,11 +383,11 @@ class AudioController extends Component {
 
   componentDidUpdate(){
     // NOTE: normalizes interval volume settings when switching back to circle mode
-    if (this.props.interfaceMode.circleControl === true){
-      this.audio.thirdVolume.volume.value = 0
-      this.audio.fifthVolume.volume.value = 0
-      this.audio.seventhVolume.volume.value = 0
-    }
+    // if (this.props.interfaceMode.circleControl === true){
+    //   this.audio.thirdVolume.volume.value = 0
+    //   this.audio.fifthVolume.volume.value = 0
+    //   this.audio.seventhVolume.volume.value = 0
+    // }
   }
 
   componentDidMount(){
@@ -403,7 +415,8 @@ class AudioController extends Component {
     }
 
     document.body.addEventListener('keydown', event=>{
-      if (!event.ctrlKey &&
+      if (!this.props.textInputFocus &&
+          !event.ctrlKey &&
           !event.altKey &&
           !event.metaKey &&
           !event.shiftKey){
@@ -418,11 +431,13 @@ class AudioController extends Component {
     })
 
     document.body.addEventListener('keyup', event=>{
-      const key = event.code
-      if (checkIfControlKey(key)){
-        event.preventDefault()
-        if (this.audio.keyDowns[key] === true){
-          this.keyUp(key)
+      if (!this.props.textInputFocus){
+        const key = event.code
+        if (checkIfControlKey(key)){
+          event.preventDefault()
+          if (this.audio.keyDowns[key] === true){
+            this.keyUp(key)
+          }
         }
       }
     })
@@ -436,6 +451,7 @@ function mapStateToProps(state) {
     interfaceMode: state.interfaceMode,
     audioSettings: state.audioSettings,
     keyDowns: state.keyDowns,
+    textInputFocus: state.textInputFocus,
   }
 }
 function mapDispatchToProps(dispatch) {
@@ -445,6 +461,7 @@ function mapDispatchToProps(dispatch) {
     changeWaveformAction: (waveform) => dispatch(changeWaveformAction(waveform)),
     // changeFilterTypeAction: (type) => dispatch(changeFilterTypeAction(type)),
     toggleKeyDownAction: (key) => dispatch(toggleKeyDownAction(key)),
+    loadSettingsAction: (settings) => dispatch(loadSettingsAction(settings)),
   }
 }
 

@@ -46,6 +46,8 @@ const initialState = {
 
 export default function audioSettingsReducer(state = initialState, action) {
   switch (action.type) {
+    case 'LOAD_SETTINGS':
+      return action.settings
     case 'CHANGE_MASTER_VOLUME':
       return {
         ...state,

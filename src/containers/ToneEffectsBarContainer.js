@@ -10,6 +10,7 @@ export default class ToneEffectsBarContainer extends Component {
     return (
       <div id="tone-effects-bar">
         <MetaControls
+          loadSettings={this.props.toneEffectsProps.loadSettings}
           changeMasterVolume={this.props.toneEffectsProps.changeMasterVolume}
          />
         <Tone

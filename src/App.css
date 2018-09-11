@@ -66,11 +66,13 @@ body{
 }
 
 #title-box{
+  height:50%;
   width: 49%;
   border-bottom: black solid;
   border-right: black solid;
 }
 #title-box>div{
+  height:50%;
   font: 34px menlo;
   text-align: center;
   position: relative;
@@ -85,6 +87,31 @@ body{
 
 #save-settings{
   width: 100%;
+  height:50%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.save-settings-element{
+  margin: 10px;
+  height: 30%;
+}
+#save-settings>button{
+  width: 50px;
+  height: 40px;
+}
+.settings-select{
+  width: 70%;
+}
+#delete-btn{
+
+}
+#text-input{
+  width: 70%;
+}
+#save-btn{
+
 }
 
 #master-volume-container{
