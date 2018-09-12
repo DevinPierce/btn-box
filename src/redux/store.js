@@ -6,7 +6,7 @@ import storage from 'redux-persist/lib/storage'
 const persistConfig = {
   key: 'root',
   storage,
-  blacklist: ['keyDowns', 'textInputFocus']
+  blacklist: ['keyDowns', 'textInputFocus', 'modalOpen']
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
