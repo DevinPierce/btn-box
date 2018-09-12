@@ -14,7 +14,8 @@ function WaveformButton (props) {
     <span
       className={parseWaveform(props.selectedWaveform) === props.type.toLowerCase() ? "waveform-button selected" : "waveform-button"}
       onClick={()=>props.changeWaveform(props.type.toLowerCase())}
-      >{parseWaveform(props.type)}
+      >
+      <object data={props.svg} />
     </span>
   )
 

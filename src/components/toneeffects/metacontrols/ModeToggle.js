@@ -4,21 +4,31 @@ import {toggleMouseControlViewAction} from '../../../redux/actions/interfaceChan
 
 import { connect } from 'react-redux';
 
-function ModeToggle (props) {
+import circleIcon from '../../../svg/circle_icon.svg'
+import chromaticIcon from '../../../svg/chromatic_icon.svg'
 
-  const renderButton = () => {
-    if (props.interfaceMode.chromaticControl){
-      return <button onClick={props.toggleMouseControlView}>TEMPORARY BUTTON HERE! switch to circle
-      </button>
-    } else if (props.interfaceMode.circleControl){
-      return <button onClick={props.toggleMouseControlView}>TEMPORARY BUTTON HERE! switch to chromatic
-      </button>
-    }
-  }
+function ModeToggle (props) {
 
   return (
     <div id="mode-toggle">
-      {renderButton()}
+      <div
+        className={props.interfaceMode.chromaticControl ? "mode-button show" : "mode-button hidden"}
+        onClick={props.toggleMouseControlView}
+        >
+        <object
+          data={circleIcon}
+          >
+          </object>
+      </div>
+      <div
+        className={props.interfaceMode.circleControl ? "mode-button show" : "mode-button hidden"}
+        onClick={props.toggleMouseControlView}
+        >
+        <object
+          data={chromaticIcon}
+          >
+          </object>
+      </div>
     </div>
   )
 

@@ -19,7 +19,7 @@ export default class FrequencyNoteDisplay extends React.Component {
 
   componentDidMount(){
     const ctx = this.canvas.current.getContext('2d')
-    ctx.font = "50px menlo";
+    ctx.font = "50px Titillium Web";
     setInterval(() => {
       ctx.clearRect(0, 0, 300, 200);
       // const data = this.props.getAnalyserValues().slice(0,48)
