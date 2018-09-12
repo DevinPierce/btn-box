@@ -29,12 +29,22 @@ body{
     cursor: pointer;
 }
 
+/* NOTE: gotta get interface to center vertically when fullscreen */
+.App{
+
+  /* display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; */
+}
+
 #interface-container{
   background-color: #595959;
   margin: 1%;
   display: flex;
   flex-direction: row;
   justify-content: center;
+  align-items: center;
   /* overflow: scroll; */
 }
 
@@ -112,6 +122,18 @@ img{
   width: 50%;
   height:50%;
 }
+.ReactModal__Content {
+  opacity: 0;
+}
+
+.ReactModal__Content--after-open {
+  opacity: 1;
+  transition: opacity 150ms;
+}
+
+.ReactModal__Content--before-close {
+  opacity: 0;
+}
 #title{
   height:50%;
   font: 34px menlo;
@@ -141,10 +163,11 @@ img{
 .save-settings-element:focus{
   outline: 2px solid #595959;
 }
-#save-settings>button{
+.save-delete-btn{
   width: 50px;
   height: 40px;
   border-radius: 6px;
+  background-color: #A0A0A0;
 }
 .settings-select{
   width: 70%;
@@ -152,12 +175,16 @@ img{
 #delete-btn{
 
 }
+#save-form{
+  width: 100%;
+}
 #text-input{
-  width: 70%;
+  width: 72%;
   border-radius: 6px;
 }
 #save-btn{
-
+  margin-left: 14px;
+  margin-right: 6px;
 }
 
 #master-volume-container{

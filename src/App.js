@@ -17,8 +17,14 @@ const modalStyle = {
     backgroundColor: 'rgba(64, 64, 64, 0.75)',
   },
   content: {
-    'backgroundColor': 'rgba(255,0,0,1)',
-    'padding': '0',
+    backgroundColor: 'rgba(255,0,0,1)',
+    padding: '0',
+    top: '240px',
+    right: '240px',
+    left: '240px',
+    bottom: '240px',
+    minWidth: '400px',
+    minHeight: '200px',
   }
 }
 
@@ -32,12 +38,12 @@ class App extends Component {
     return (
       <div className="App">
         <Modal
-
           isOpen={this.props.modalOpen}
           style={modalStyle}
           shouldCloseOnOverlayClick={true}
           shouldCloseOnEsc={true}
           onRequestClose={this.closeModal}
+          closeTimeoutMS={150}
           >
             <About
               closeModal={this.closeModal}

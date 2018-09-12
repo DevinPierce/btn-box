@@ -11,10 +11,16 @@ import {toggleTextInputFocusAction} from '../../../redux/actions/textInputFocusA
 
 class SaveSettings extends React.Component {
 
-  state = {
-    name: '',
-    selected: null
+  constructor(props){
+    super(props)
+    this.select = React.createRef()
+    this.textInput = React.createRef()
+    this.state = {
+      name: '',
+      selected: null
+    }
   }
+
 
   selectOptions = () => {
     return this.props.savedSettings.map(setting => {
@@ -22,7 +28,8 @@ class SaveSettings extends React.Component {
     })
   }
 
-  handleSave = () => {
+  handleSave = (event) => {
+    event.preventDefault()
     if (this.state.name !== ''){
       this.props.saveSettingsAction(this.state.name, this.props.audioSettings)
       // BUG: saving selects the previously created (second to last) setting, instead of the newly created one
@@ -30,7 +37,7 @@ class SaveSettings extends React.Component {
       this.setState({
         name: '',
         selected: null
-      })
+      }, ()=>{this.textInput.current.blur()})
     }
   }
   handleLoad = (event) => {
@@ -39,6 +46,7 @@ class SaveSettings extends React.Component {
     }, ()=>{
       const settings = this.props.savedSettings.find(setting => setting.id === this.state.selected.value).settings
       this.props.loadSettings(settings)
+      this.select.current.blur()
     })
   }
   handleDelete = () => {
@@ -60,38 +68,48 @@ class SaveSettings extends React.Component {
     this.props.toggleTextInputFocusAction()
   }
 
+  handleMenuClose = () => {
+    this.select.current.blur()
+  }
+
   render(){
     return (
       <div id="save-settings">
         <Select
+          ref={this.select}
           className="settings-select save-settings-element"
           options={this.selectOptions()}
           onChange={(event)=>this.handleLoad(event)}
+          onMenuClose={this.handleMenuClose}
           isDisabled={this.props.savedSettings.length > 0 ? false : true}
-          placeholder="Select a settings profile"
+          placeholder="Settings"
           value={this.state.selected}
         />
         <button
           id="delete-btn"
-          className="save-settings-element"
+          className="save-settings-element save-delete-btn"
           onClick={this.handleDelete}
         >Delete</button>
-        <input
-          id="text-input"
-          className="save-settings-element"
-          type="text"
-          name="name"
-          placeholder="Name this settings profile"
-          onChange={(event)=>this.handleTextChange(event)}
-          onFocus={this.handleFocusBlur}
-          onBlur={this.handleFocusBlur}
-          value={this.state.name}
-        />
-        <button
-          id="save-btn"
-          className="save-settings-element"
-          onClick={this.handleSave}
-          >Save</button>
+        <form id="save-form" onSubmit={(event)=>this.handleSave(event)}>
+          <input
+            ref={this.textInput}
+            id="text-input"
+            className="save-settings-element"
+            type="text"
+            name="name"
+            placeholder="Name this settings profile"
+            onChange={(event)=>this.handleTextChange(event)}
+            onFocus={this.handleFocusBlur}
+            onBlur={this.handleFocusBlur}
+            value={this.state.name}
+          />
+          <input
+            id="save-btn"
+            type="submit"
+            className="save-settings-element save-delete-btn"
+            value="Save"
+          />
+        </form>
       </div>
     )
   }

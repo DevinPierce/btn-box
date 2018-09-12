@@ -19,7 +19,7 @@ export default class FrequencyNoteDisplay extends React.Component {
 
   componentDidMount(){
     const ctx = this.canvas.current.getContext('2d')
-    ctx.font = "30px Arial";
+    ctx.font = "50px menlo";
     setInterval(() => {
       ctx.clearRect(0, 0, 300, 200);
       // const data = this.props.getAnalyserValues().slice(0,48)
@@ -42,7 +42,7 @@ export default class FrequencyNoteDisplay extends React.Component {
         rootNote = rootNote[0]
       }
       ctx.fillText(rootNote, 130, 75)
-      ctx.fillText(Math.round(this.props.getRootFrequency()) + 'Hz', 110, 155)
+      ctx.fillText(Math.round(this.props.getRootFrequency()) + 'Hz', 80, 155)
     }, 50)
   }
 
