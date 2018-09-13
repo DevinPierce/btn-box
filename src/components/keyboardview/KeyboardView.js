@@ -10,8 +10,8 @@ export default function KeyboardView (props) {
         <KeyView key="Q" k="Q" chord="Aug" />
         <KeyView key="W" k="W" chord="dim" />
         <KeyView key="E" k="E" chord="Maj7" />
-        <KeyView key="R" k="R" chord="minMaj7" />
-        <KeyView key="T" k="T" chord="1/2dim7" />
+        <KeyView key="R" k="R" chord="mM7" />
+        <KeyView key="T" k="T" chord="&#189;dim7" />
       </div>
       <div id="row-two" className="keyboard-row">
         <KeyView key="A" k="A" chord="Maj" />

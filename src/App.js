@@ -19,10 +19,10 @@ const modalStyle = {
   content: {
     backgroundColor: 'rgba(255,0,0,1)',
     padding: '0',
-    top: '240px',
-    right: '240px',
-    left: '240px',
-    bottom: '240px',
+    top: '300px',
+    right: '300px',
+    left: '300px',
+    bottom: '300px',
     minWidth: '400px',
     minHeight: '200px',
   }

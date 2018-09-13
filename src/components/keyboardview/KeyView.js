@@ -6,9 +6,8 @@ function KeyView (props) {
 
   return (
     <div className={props.keyDowns['Key' + props.k] || props.keyDowns[props.k] ? "key pressed" : "key"}>
-      {props.k}
-      <br />
-      {props.chord}
+      <div className="key-letter">{props.k}</div>
+      <div className="chord-symbol">{props.chord}</div>
     </div>
     )
 
