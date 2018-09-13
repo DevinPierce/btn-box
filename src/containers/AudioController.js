@@ -321,6 +321,13 @@ class AudioController extends Component {
           this.props.changeEffectValueAction('tremolo', 'depth', value)
           console.log(this.audio.tremolo.depth.value);
         },
+        spread:(value) => {
+          console.log('changing spread');
+          console.log(this.audio.tremolo.spread);
+          this.audio.tremolo.spread = value
+          this.props.changeEffectValueAction('tremolo', 'spread', value)
+          console.log(this.audio.tremolo.spread);
+        },
         wet:(value) => {
           console.log('changing wet');
           this.audio.tremolo.wet.value = value
@@ -349,12 +356,18 @@ class AudioController extends Component {
     const getRootNote = () => {
       return this.audio.convertFrequencyToNote(this.audio.rootNote.frequency.value)
     }
+    const getActiveNotes = () => {
+      return this.audio.activeNotes.map(note => {
+        return this.audio.convertFrequencyToNote(note.frequency.value)
+      })
+    }
     const getRootFrequency = () => {
       return this.audio.rootNote.frequency.value
     }
     return {
       // getAnalyserValues,
       getRootNote,
+      getActiveNotes,
       getRootFrequency,
     }
   }

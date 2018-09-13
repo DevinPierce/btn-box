@@ -12,9 +12,9 @@ function ChromaticControl (props) {
     // const scaledX = (event.nativeEvent.offsetX / 700) - 1
     // props.chromaticControlProps.changeXValue(scaledX)
     // IDEA: x-axis should control "chord volume," icreasing volume up the triad as you go right
-    let invertedY = (elementHeight - event.nativeEvent.offsetY)
+    const invertedY = (elementHeight - event.nativeEvent.offsetY)
 
-    // NOTE: 110, or A3. scales up to 440, A5
+    // NOTE: 110, or A2. scales up to 440, A4
     const minV = Math.log(110)
     const maxV = Math.log(440)
     const scale = (maxV - minV) / (500 - 0)
@@ -23,9 +23,9 @@ function ChromaticControl (props) {
       return Math.exp(minV + scale * (invertedY - 0));
     }
 
-    function valueToPosition(value) {
-      return (Math.log(value) - minV) / scale + 0;
-    }
+    // function valueToPosition(value) {
+    //   return (Math.log(value) - minV) / scale + 0;
+    // }
 
     const value = positionToValue(Number(invertedY));
     props.chromaticControlProps.changeYValue(value);

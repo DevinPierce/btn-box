@@ -19,7 +19,6 @@ export default class FrequencyNoteDisplay extends React.Component {
 
   componentDidMount(){
     const ctx = this.canvas.current.getContext('2d')
-    ctx.font = "64px Titillium Web";
     setInterval(() => {
       ctx.clearRect(0, 0, 300, 200);
       // const data = this.props.getAnalyserValues().slice(0,48)
@@ -33,6 +32,7 @@ export default class FrequencyNoteDisplay extends React.Component {
       //
       //   x += barWidth + 1;
       // }
+      ctx.font = "64px Titillium Web";
       let rootNote = this.props.getRootNote()
       console.log(rootNote);
       if (rootNote[1] === '#'){
@@ -42,9 +42,28 @@ export default class FrequencyNoteDisplay extends React.Component {
       } else {
         rootNote
       }
-      ctx.fillText(rootNote, 70, 75)
-      ctx.fillText(Math.round(this.props.getRootFrequency()) + 'Hz', 70, 155)
-    }, 50)
+      ctx.fillText(rootNote, 65, 80)
+      ctx.fillText(Math.round(this.props.getRootFrequency()) + 'Hz', 65, 160)
+
+
+      // NOTE: notes need to be sorted in ascending order, but activeNotes array is not ordered. Also, accidentals are wrong, since Tone toNote always returns sharps.  it might be easier to map out all the chords somewhere, or transpose off root note based on active notes or something? I don't know
+      // ctx.font = "20px Titillium Web";
+      // let activeNotes = this.props.getActiveNotes().map(note => {
+      //   if (note[1] === '#'){
+      //     return note[0] + '\u266F' + note[2]
+      //   } else if (note[1] === 'b'){
+      //     return note[0] + '\u266D' + note[2]
+      //   } else {
+      //     return note
+      //   }
+      // })
+      // let y = 180
+      // activeNotes.forEach(note => {
+      //   ctx.fillText(note, 10, y)
+      //   y -= 20
+      // })
+
+    }, 75)
   }
 
 }

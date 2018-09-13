@@ -8,10 +8,12 @@ function Audio (settings) {
   // const fftAnalyser = new Tone.Analyser({size: 256, type: 'fft'})
 
   const master = new Tone.Volume(settings.master).connect(limiter)
-  master.connect(waveAnalyser)
-  // master.connect(fftAnalyser)
 
   const reverb = new Tone.Freeverb(settings.reverb).connect(master)
+
+  reverb.connect(waveAnalyser)
+  // master.connect(fftAnalyser)
+
   const delay = new Tone.FeedbackDelay(settings.delay).connect(reverb)
   // const filter = new Tone.Filter(settings.filter).connect(delay)
   const vibrato = new Tone.Vibrato(settings.vibrato).connect(delay)
@@ -25,20 +27,31 @@ function Audio (settings) {
 
   const rootNote = new Tone.Synth(settings.synths).connect(mixer)
 
-  const thirdVolume = new Tone.Volume().connect(mixer)
-  const fifthVolume = new Tone.Volume().connect(mixer)
-  const seventhVolume = new Tone.Volume().connect(mixer)
+  // const thirdVolume = new Tone.Volume().connect(mixer)
+  // const fifthVolume = new Tone.Volume().connect(mixer)
+  // const seventhVolume = new Tone.Volume().connect(mixer)
 
-  const majorSecond = new Tone.Synth(settings.synths).connect(thirdVolume)
-  const minorThird = new Tone.Synth(settings.synths).connect(thirdVolume)
-  const majorThird = new Tone.Synth(settings.synths).connect(thirdVolume)
-  const perfectFourth = new Tone.Synth(settings.synths).connect(thirdVolume)
-  const diminishedFifth = new Tone.Synth(settings.synths).connect(fifthVolume)
-  const perfectFifth = new Tone.Synth(settings.synths).connect(fifthVolume)
-  const augmentedFifth = new Tone.Synth(settings.synths).connect(fifthVolume)
-  const minorSeventh = new Tone.Synth(settings.synths).connect(seventhVolume)
-  const majorSeventh = new Tone.Synth(settings.synths).connect(seventhVolume)
-  const sixthDiminishedSeventh = new Tone.Synth(settings.synths).connect(seventhVolume)
+  // const majorSecond = new Tone.Synth(settings.synths).connect(thirdVolume)
+  // const minorThird = new Tone.Synth(settings.synths).connect(thirdVolume)
+  // const majorThird = new Tone.Synth(settings.synths).connect(thirdVolume)
+  // const perfectFourth = new Tone.Synth(settings.synths).connect(thirdVolume)
+  // const diminishedFifth = new Tone.Synth(settings.synths).connect(fifthVolume)
+  // const perfectFifth = new Tone.Synth(settings.synths).connect(fifthVolume)
+  // const augmentedFifth = new Tone.Synth(settings.synths).connect(fifthVolume)
+  // const minorSeventh = new Tone.Synth(settings.synths).connect(seventhVolume)
+  // const majorSeventh = new Tone.Synth(settings.synths).connect(seventhVolume)
+  // const sixthDiminishedSeventh = new Tone.Synth(settings.synths).connect(seventhVolume)
+
+  const majorSecond = new Tone.Synth(settings.synths).connect(mixer)
+  const minorThird = new Tone.Synth(settings.synths).connect(mixer)
+  const majorThird = new Tone.Synth(settings.synths).connect(mixer)
+  const perfectFourth = new Tone.Synth(settings.synths).connect(mixer)
+  const diminishedFifth = new Tone.Synth(settings.synths).connect(mixer)
+  const perfectFifth = new Tone.Synth(settings.synths).connect(mixer)
+  const augmentedFifth = new Tone.Synth(settings.synths).connect(mixer)
+  const minorSeventh = new Tone.Synth(settings.synths).connect(mixer)
+  const majorSeventh = new Tone.Synth(settings.synths).connect(mixer)
+  const sixthDiminishedSeventh = new Tone.Synth(settings.synths).connect(mixer)
 
   const keyDowns = {
     KeyQ: false,
@@ -94,9 +107,9 @@ function Audio (settings) {
 
     rootNote,
 
-    thirdVolume,
-    fifthVolume,
-    seventhVolume,
+    // thirdVolume,
+    // fifthVolume,
+    // seventhVolume,
 
     majorSecond,
     minorThird,
