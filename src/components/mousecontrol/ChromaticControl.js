@@ -13,10 +13,10 @@ function ChromaticControl (props) {
     // props.chromaticControlProps.changeXValue(scaledX)
     // IDEA: x-axis should control "chord volume," icreasing volume up the triad as you go right
     let invertedY = (elementHeight - event.nativeEvent.offsetY)
-    // IDEA: get Y value to scale logarithmically I think?
 
-    const minV = Math.log(65)
-    const maxV = Math.log(265)
+    // NOTE: 110, or A3. scales up to 440, A5
+    const minV = Math.log(110)
+    const maxV = Math.log(440)
     const scale = (maxV - minV) / (500 - 0)
 
     function positionToValue(invertedY) {
@@ -31,10 +31,8 @@ function ChromaticControl (props) {
     props.chromaticControlProps.changeYValue(value);
 
     // props.chromaticControlProps.changeYValue(((invertedY + 162) * 0.40))
-    // props.chromaticControlProps.changeYValue(((Math.log(500/0.1)/199+0.1) * invertedY* 1.1))
 
-    // NOTE: ~65, or C2. scales up to about 264Hz, just slightly over C4
-    // IDEA: Y value passed here is pretty arbitrary; I guess it depends on what I decide to make the range, and what information the mouse input element displays later
+
   }
   const handleMouseOver = () => {
     props.chromaticControlProps.toneStart()

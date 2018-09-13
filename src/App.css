@@ -112,6 +112,7 @@ object{
   background-color: rgb(192, 192, 192);
   opacity: 1;
   text-align: center;
+  font-size: 14pt;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -600,6 +601,7 @@ visibility: hidden;
 }
 .pressed{
   background-color: #808080;
+  color: white;
 }
 
 .key-letter{
@@ -607,9 +609,10 @@ visibility: hidden;
   padding-left: 6px;
 }
 .chord-symbol{
+  float: right;
   position: relative;
-  bottom: 8px;
-  left: 4px;
+  bottom: 9px;
+  right: 3px;
 }
 
 #frequency-note-display{
@@ -618,4 +621,8 @@ visibility: hidden;
 
 #frequency-note-display>canvas{
   margin: 25px;
+  /* border-style: solid;
+  border-color: black;
+  border-radius: 50%;
+  border-width: 2px; */
 }

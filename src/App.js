@@ -25,6 +25,7 @@ const modalStyle = {
     bottom: '300px',
     minWidth: '400px',
     minHeight: '200px',
+    borderRadius: '20px',
   }
 }
 
